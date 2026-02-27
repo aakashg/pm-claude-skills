@@ -4,8 +4,9 @@
 
 Each skill triggers on natural language — just say "write a LinkedIn post" or "validate this idea" and Claude knows what to do.
 
-**This is a free set. I shared 6 more skills with full breakdowns in my deep dive.**
-**[Get 6 more skills with walkthroughs →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
+**These 5 skills are fully functional — install and use them today. I wrote a deep dive breaking down 6 additional skills with the reasoning behind each one, how I built them, and what makes them work.**
+
+**[Read the full skill breakdown →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
 
 ---
 
@@ -49,7 +50,7 @@ Think of them like playbooks: each skill encodes a specific workflow so Claude p
 
 ## Want More?
 
-I wrote a full breakdown of 6 additional skills with explanations of why each one works.
+I wrote a deep dive explaining the architecture behind my skill system — how to structure triggers, chain skills together, and build skills that actually produce consistent output.
 
 **[Steal 6 of My Claude Skills →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
 
