@@ -57,3 +57,71 @@ I wrote a deep dive explaining the architecture behind my skill system — how t
 ---
 
 Built by [Aakash Gupta](https://www.aakashg.com) | [Product Growth Newsletter](https://www.news.aakashg.com)
+
+---
+
+## How to Create Your Own Skill
+
+Skills are markdown files that extend Claude Code's capabilities for specific PM tasks. Here's how to build one from scratch.
+
+### Step 1: Identify the Task
+
+Pick a task you do repeatedly that has a consistent structure. Good candidates:
+- Writing PRDs, one-pagers, or status updates
+- Doing competitive analysis
+- Preparing for user interviews
+- Prioritizing a backlog
+
+### Step 2: Create the Directory
+
+```bash
+mkdir -p .claude/skills/your-skill-name
+```
+
+### Step 3: Write the SKILL.md
+
+Use the template below (also available at `templates/SKILL-TEMPLATE.md`):
+
+```markdown
+# Skill: [Skill Name]
+
+## Trigger
+Activate this skill when the user asks to [describe trigger condition].
+
+## Context
+[Background knowledge Claude needs. Industry terms, frameworks, assumptions.]
+
+## Instructions
+1. [Step-by-step rules for Claude to follow]
+2. [Be specific — vague instructions produce vague output]
+3. [Include decision points: "If X, do Y. Otherwise, do Z."]
+
+## Output Format
+[Describe the expected structure: headings, bullet points, tables, length]
+
+## Examples
+
+### Example 1
+**Input:** [What the user says]
+**Output:** [What Claude should produce]
+
+### Example 2
+**Input:** [Another scenario]
+**Output:** [Expected result]
+
+## Anti-patterns
+- [Common mistakes to avoid]
+- [Things this skill should NOT do]
+```
+
+### Step 4: Test It
+
+1. Drop the skill into `.claude/skills/` in any project
+2. Start a Claude Code session
+3. Ask Claude to perform the task described in your trigger
+4. Evaluate the output — does it match your expectations?
+5. Refine the SKILL.md based on what went wrong
+
+### Step 5: Share It
+
+Once your skill works well, submit it to this repo via PR. See CONTRIBUTING.md for details.
