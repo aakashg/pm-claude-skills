@@ -1,5 +1,8 @@
 # PM Claude Skills
 
+[![Stars](https://img.shields.io/github/stars/aakashg/pm-claude-skills?style=flat-square)](https://github.com/aakashg/pm-claude-skills/stargazers)
+[![License](https://img.shields.io/github/license/aakashg/pm-claude-skills?style=flat-square)](LICENSE)
+
 5 ready-to-use Claude Code skills for product managers. Drop them in your `.claude/skills/` folder and they work immediately.
 
 Each skill triggers on natural language — just say "write a LinkedIn post" or "validate this idea" and Claude knows what to do.
