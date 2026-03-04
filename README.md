@@ -25,31 +25,72 @@ Each skill triggers on natural language — just say "write a LinkedIn post" or 
 
 ## Setup
 
-**Option 1: Copy all skills**
+**Option 1: One-liner install (all skills)**
 ```bash
-cp -r skills/* /path/to/your/project/.claude/skills/
+git clone https://github.com/aakashg/pm-claude-skills.git /tmp/pm-claude-skills && \
+  mkdir -p .claude/skills && \
+  cp -r /tmp/pm-claude-skills/skills/* .claude/skills/
 ```
 
-**Option 2: Copy individual skills**
+**Option 2: Cherry-pick individual skills**
 ```bash
-# Just the ones you want
-cp -r skills/linkedin-post-writer /path/to/your/project/.claude/skills/
-cp -r skills/idea-validator /path/to/your/project/.claude/skills/
+mkdir -p .claude/skills
+# Copy just the ones you want
+cp -r /tmp/pm-claude-skills/skills/linkedin-post-writer .claude/skills/
+cp -r /tmp/pm-claude-skills/skills/idea-validator .claude/skills/
 ```
 
-**Option 3: Clone and symlink**
+**Option 3: Clone and symlink (auto-updates when you `git pull`)**
 ```bash
-git clone https://github.com/aakashg/pm-claude-skills.git
-ln -s pm-claude-skills/skills/* /path/to/your/project/.claude/skills/
+git clone https://github.com/aakashg/pm-claude-skills.git ~/pm-claude-skills
+mkdir -p .claude/skills
+ln -s ~/pm-claude-skills/skills/* .claude/skills/
 ```
 
-Then open Claude Code in your project. Skills load automatically.
+**Verify it worked:**
+```bash
+ls .claude/skills/
+# You should see: idea-validator  linkedin-post-writer  product-designer  prompt-engineer  status-update-writer
+```
+
+Then open Claude Code in your project. Say "write a LinkedIn post" or "validate this idea" — skills load automatically when triggered.
 
 ## How Skills Work
 
 Claude Code skills are markdown files in `.claude/skills/` that load on demand. When you say something that matches a skill's trigger, Claude reads the SKILL.md and follows its instructions.
 
 Think of them like playbooks: each skill encodes a specific workflow so Claude produces consistent, high-quality output every time.
+
+### Combining Skills with CLAUDE.md
+
+Skills work best alongside a `CLAUDE.md` in your project root. The CLAUDE.md sets your global context (who you are, your product, your writing style). Skills handle specific tasks.
+
+```
+CLAUDE.md  →  "I'm a PM at a B2B SaaS company. Our product is..."
+Skills     →  "When I say 'write a status update,' follow these steps..."
+```
+
+This separation matters: CLAUDE.md loads every session, skills load only when triggered. Put your identity, style rules, and company context in CLAUDE.md. Put task-specific workflows in skills.
+
+### Customizing Skills for Your Team
+
+These skills are starting points. Fork and adapt them:
+
+1. **Add your company context** — Replace generic examples with real ones from your product. A status update skill that knows your team's OKR format is 10x more useful.
+2. **Tune the output format** — If your VP prefers a different status update structure, change it. The skill should match how your org actually communicates.
+3. **Add your anti-patterns** — Every team has its own "things we always get wrong." Add them to the relevant skill's anti-patterns section.
+
+### Troubleshooting
+
+**Skills aren't triggering:**
+- Check the path: skills must be in `.claude/skills/[skill-name]/SKILL.md` (not `skills/` at the project root)
+- Make sure the file is named exactly `SKILL.md` (case-sensitive)
+- Try using the exact trigger phrase from the skill (e.g., "write a LinkedIn post")
+
+**Output quality is inconsistent:**
+- Add more examples to the skill's Examples section — examples beat instructions for teaching Claude patterns
+- Check that your CLAUDE.md isn't contradicting the skill's instructions
+- Use `/clear` between unrelated tasks to prevent context bleed
 
 ## Want More?
 
