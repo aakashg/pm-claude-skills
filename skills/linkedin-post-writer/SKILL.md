@@ -12,11 +12,11 @@ Ask:
 3. Any specific hook or angle you want?
 4. What format? (Listicle, story, hot take, lesson learned, framework — or let me pick)
 
-If the user provides raw notes, a thread, or an article link — extract the insight yourself and confirm before writing.
+If the user provides raw notes, a thread, or an article link, extract the insight directly and confirm before writing.
 
 ### Step 2: Pick the Right Format
 
-Choose the format that best fits the idea:
+Match the format to the idea:
 
 **Listicle** — Best for tips, lessons, frameworks. High save rate.
 **Story arc** — Best for personal experiences, turning points. High comment rate.
@@ -28,10 +28,10 @@ Choose the format that best fits the idea:
 ### Step 3: Write the Post
 
 **Hook (Line 1):**
-- This is 80% of the post's performance. Spend most of your effort here.
-- Must be ONE line only. Two-line hooks drop reach significantly.
+- This determines 80% of the post's performance. Spend the most effort here.
+- ONE line only. Two-line hooks drop reach significantly.
 - Must work on mobile — only the first 2 lines show before "...see more."
-- Ask yourself: "What is the ONE thing I want the reader to learn?" That's your hook.
+- Identify the ONE thing you want the reader to learn. That is your hook.
 
 Hook formulas that work:
 - **Bold claim**: "Most people fail on LinkedIn because they write for everyone."
@@ -42,8 +42,8 @@ Hook formulas that work:
 - **Transformation hook**: "I packed a one-way ticket and it changed everything."
 
 **Re-Hook (Line 2):**
-- The second line is almost as important as the first. It's the "bait and switch" — it adds heft, creates contrast, or preempts an objection.
-- The re-hook slams the door behind the reader and keeps them reading.
+- The second line is nearly as critical as the first. It adds heft, creates contrast, or preempts an objection.
+- The re-hook locks the reader in and keeps them scrolling.
 
 Re-hook patterns:
 - **Add heft (preempt objection)**: Hook: "This is the easiest way to find clients on LinkedIn" → Re-hook: "without spending a single dollar"
@@ -64,7 +64,7 @@ Re-hook patterns:
 
 ### The "Write to One Person" Method
 
-Write every post as if you're writing to one specific person — a friend, a mentee, a past version of yourself. This forces conversational tone and makes the post feel human. If it sounds like something you'd say over coffee, you're on the right track. If it sounds like a keynote speech, rewrite it.
+Write every post to one specific person — a friend, a mentee, a past version of yourself. This forces conversational tone and makes the post feel human. If it sounds like coffee conversation, it works. If it sounds like a keynote speech, rewrite it.
 
 ### Formatting Rules
 - Target 800-1,300 characters. Under 800 feels thin. Over 1,300 gets truncated in feed.
@@ -85,7 +85,7 @@ After the first draft, offer:
 
 ## Examples of High-Performing Posts
 
-Study these patterns. Don't copy them — internalize the structure.
+Study these patterns. Internalize the structure, not the words.
 
 ### Example 1: Listicle with Objection-Busting Hook (Creator Education)
 
@@ -294,7 +294,7 @@ I ignored all three. It cost me 6 months.
 
 ## Pre-Publish Checklist
 
-Before presenting the final draft, silently run through this checklist. Fix any issues, then show the user the clean version.
+Run this checklist silently before presenting the final draft. Fix issues first, then show the clean version.
 
 **Hook Test:**
 - [ ] Does the hook work with ZERO context? Read just line 1 — would you tap "see more"?

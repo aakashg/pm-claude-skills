@@ -3,11 +3,11 @@
 [![Stars](https://img.shields.io/github/stars/aakashg/pm-claude-skills?style=flat-square)](https://github.com/aakashg/pm-claude-skills/stargazers)
 [![License](https://img.shields.io/github/license/aakashg/pm-claude-skills?style=flat-square)](LICENSE)
 
-5 ready-to-use Claude Code skills for product managers. Drop them in your `.claude/skills/` folder and they work immediately.
+5 production-ready Claude Code skills for product managers. Drop them in `.claude/skills/` and they work immediately.
 
-Each skill triggers on natural language — just say "write a LinkedIn post" or "validate this idea" and Claude knows what to do.
+Each skill triggers on natural language. Say "write a LinkedIn post" or "validate this idea" and Claude follows the playbook.
 
-**These 5 skills are fully functional — install and use them today. I wrote a deep dive breaking down 6 additional skills with the reasoning behind each one, how I built them, and what makes them work.**
+**All 5 skills are fully functional. I wrote a deep dive breaking down 6 additional skills: the reasoning behind each one, how I built them, and what makes them work.**
 
 **[Read the full skill breakdown →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
 
@@ -17,11 +17,11 @@ Each skill triggers on natural language — just say "write a LinkedIn post" or 
 
 | # | Skill | Trigger | What It Does |
 |---|-------|---------|-------------|
-| 1 | [LinkedIn Post Writer](skills/linkedin-post-writer/SKILL.md) | "write a LinkedIn post" | Turns rough ideas into structured LinkedIn posts |
-| 2 | [Idea Validator](skills/idea-validator/SKILL.md) | "validate this idea" | Stress-tests product ideas before you invest time |
-| 3 | [Prompt Engineer](skills/prompt-engineer/SKILL.md) | "improve this prompt" | Upgrades your prompts using proven techniques |
-| 4 | [Product Designer](skills/product-designer/SKILL.md) | "review this design" | Reviews designs for consistency, clarity, and UX issues |
-| 5 | [Status Update Writer](skills/status-update-writer/SKILL.md) | "write a status update" | Turns messy notes into clean stakeholder updates |
+| 1 | [LinkedIn Post Writer](skills/linkedin-post-writer/SKILL.md) | "write a LinkedIn post" | Turns rough ideas into structured, high-performing LinkedIn posts |
+| 2 | [Idea Validator](skills/idea-validator/SKILL.md) | "validate this idea" | Stress-tests product ideas across 5 dimensions before you invest time |
+| 3 | [Prompt Engineer](skills/prompt-engineer/SKILL.md) | "improve this prompt" | Diagnoses and upgrades prompts using proven techniques |
+| 4 | [Product Designer](skills/product-designer/SKILL.md) | "review this design" | Reviews designs for clarity, consistency, and UX issues |
+| 5 | [Status Update Writer](skills/status-update-writer/SKILL.md) | "write a status update" | Converts messy notes into precise stakeholder updates |
 
 ## Setup
 
@@ -57,9 +57,9 @@ Then open Claude Code in your project. Say "write a LinkedIn post" or "validate 
 
 ## How Skills Work
 
-Claude Code skills are markdown files in `.claude/skills/` that load on demand. When you say something that matches a skill's trigger, Claude reads the SKILL.md and follows its instructions.
+Claude Code skills are markdown files in `.claude/skills/` that load on demand. When your input matches a skill's trigger, Claude reads the SKILL.md and follows its instructions.
 
-Think of them like playbooks: each skill encodes a specific workflow so Claude produces consistent, high-quality output every time.
+Think of them as playbooks: each skill encodes a specific workflow so Claude produces consistent, high-quality output every time.
 
 ### Combining Skills with CLAUDE.md
 
@@ -70,15 +70,15 @@ CLAUDE.md  →  "I'm a PM at a B2B SaaS company. Our product is..."
 Skills     →  "When I say 'write a status update,' follow these steps..."
 ```
 
-This separation matters: CLAUDE.md loads every session, skills load only when triggered. Put your identity, style rules, and company context in CLAUDE.md. Put task-specific workflows in skills.
+This separation matters: CLAUDE.md loads every session; skills load only when triggered. Identity, style rules, and company context belong in CLAUDE.md. Task-specific workflows belong in skills.
 
 ### Customizing Skills for Your Team
 
-These skills are starting points. Fork and adapt them:
+These skills are starting points. Fork and adapt:
 
-1. **Add your company context** — Replace generic examples with real ones from your product. A status update skill that knows your team's OKR format is 10x more useful.
-2. **Tune the output format** — If your VP prefers a different status update structure, change it. The skill should match how your org actually communicates.
-3. **Add your anti-patterns** — Every team has its own "things we always get wrong." Add them to the relevant skill's anti-patterns section.
+1. **Add your company context** — Replace generic examples with real ones from your product. A status update skill that knows your OKR format is 10x more useful.
+2. **Tune the output format** — If your VP prefers a different structure, change it. The skill must match how your org actually communicates.
+3. **Add your anti-patterns** — Every team has recurring mistakes. Add them to the relevant skill's anti-patterns section.
 
 ### Troubleshooting
 
@@ -88,13 +88,13 @@ These skills are starting points. Fork and adapt them:
 - Try using the exact trigger phrase from the skill (e.g., "write a LinkedIn post")
 
 **Output quality is inconsistent:**
-- Add more examples to the skill's Examples section — examples beat instructions for teaching Claude patterns
-- Check that your CLAUDE.md isn't contradicting the skill's instructions
+- Add more examples to the skill's Examples section. Examples teach Claude patterns faster than instructions
+- Verify your CLAUDE.md does not contradict the skill's instructions
 - Use `/clear` between unrelated tasks to prevent context bleed
 
 ## Want More?
 
-I wrote a deep dive explaining the architecture behind my skill system — how to structure triggers, chain skills together, and build skills that actually produce consistent output.
+I wrote a deep dive on the architecture behind my skill system: how to structure triggers, chain skills together, and build skills that produce consistent output.
 
 **[Steal 6 of My Claude Skills →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
 
@@ -106,11 +106,11 @@ Built by [Aakash Gupta](https://www.aakashg.com) | [Product Growth Newsletter](h
 
 ## How to Create Your Own Skill
 
-Skills are markdown files that extend Claude Code's capabilities for specific PM tasks. Here's how to build one from scratch.
+Skills are markdown files that extend Claude Code for specific PM tasks. Here is how to build one from scratch.
 
 ### Step 1: Identify the Task
 
-Pick a task you do repeatedly that has a consistent structure. Good candidates:
+Pick a repeatable task with consistent structure. Good candidates:
 - Writing PRDs, one-pagers, or status updates
 - Doing competitive analysis
 - Preparing for user interviews
@@ -168,4 +168,4 @@ Activate this skill when the user asks to [describe trigger condition].
 
 ### Step 5: Share It
 
-Once your skill works well, submit it to this repo via PR. See CONTRIBUTING.md for details.
+Once your skill works well, submit it via PR. See CONTRIBUTING.md for details.

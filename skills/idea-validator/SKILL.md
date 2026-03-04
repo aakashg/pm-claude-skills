@@ -12,11 +12,11 @@ Ask:
 3. How are they solving it today?
 4. Why are you the right person/team to build this?
 
-If the user gives a vague answer to #2 (e.g., "everyone" or "businesses"), push back. A good idea has a specific first customer.
+If the user gives a vague answer to #2 (e.g., "everyone" or "businesses"), push back. Every viable idea has a specific first customer.
 
 ### Step 2: Run the Validation Framework
 
-Score the idea across 5 dimensions. For each, give a rating (**Strong** / **Moderate** / **Weak**) with 3-5 sentences of reasoning. Be specific — cite comparables, reference market data, and name assumptions.
+Score the idea across 5 dimensions. Rate each **Strong** / **Moderate** / **Weak** with 3-5 sentences of reasoning. Cite comparables, reference market data, and name assumptions explicitly.
 
 **1. Problem Severity**
 - Is this a hair-on-fire problem or a nice-to-have?
@@ -75,7 +75,7 @@ Scoring guide:
 
 ### Step 2b: Quick Competitive Scan
 
-Before scoring Market Evidence, do a rapid competitive landscape check. This takes 60 seconds and grounds your ratings in reality instead of vibes.
+Before scoring Market Evidence, run a rapid competitive scan. This grounds ratings in reality, not intuition.
 
 **Direct competitors** (same problem, same customer):
 - Name 2-3 if they exist. Note their pricing, estimated size, and how long they've been around.
@@ -87,7 +87,7 @@ Before scoring Market Evidence, do a rapid competitive landscape check. This tak
 
 **Graveyard check**:
 - Have similar products been tried and failed? If so, why? (Timing, execution, market?)
-- A failed predecessor isn't disqualifying — but the user needs to explain what's different now.
+- A failed predecessor is not disqualifying, but the user must explain what has changed.
 
 Present this as a compact table:
 
@@ -115,7 +115,7 @@ Present a summary scorecard:
 | Business Viability     | [rating] |
 ```
 
-Then give an overall assessment:
+Then deliver the overall assessment:
 
 **Verdict: [GO / ITERATE / STOP]**
 - **GO**: Strong across 4+ dimensions. Worth building an MVP now.
@@ -123,10 +123,10 @@ Then give an overall assessment:
 - **STOP**: Fundamental issues that pivoting won't fix. Explain why directly.
 
 ### Step 4: Killer Questions
-Ask 3 questions the founder should be able to answer before building. These should target the weakest dimensions.
+Ask 3 questions the founder must answer before building. Target the weakest dimensions.
 
 ### Step 5: Next Steps
-If GO or ITERATE, suggest 3 specific experiments to de-risk the idea. Prioritize the cheapest and fastest.
+If GO or ITERATE, suggest 3 specific experiments to de-risk the idea. Prioritize by speed and cost.
 
 Format each as:
 - **Experiment**: [What to do]
@@ -166,7 +166,7 @@ This would save time.
 There are some competitors in this space which validates the idea.
 ```
 
-The bad version gives ratings without evidence. No specifics, no data, no reasoning. Useless.
+The bad version gives ratings without evidence. No specifics, no data, no reasoning. Worthless.
 
 ### Good STOP Verdict
 
@@ -208,15 +208,15 @@ The bad version doesn't explain WHY it's a stop. It mistakes having competitors 
 ---
 
 ## Anti-Patterns
-- Don't give STRONG ratings without evidence. Every rating needs specific reasoning.
-- Don't default to GO because the user is excited. Your job is honesty, not encouragement.
-- Don't confuse "no competitors" with opportunity. It usually means no market.
-- Don't say "this could be big" without showing the math.
-- Don't suggest building before validating. The first next step is almost never "build the MVP."
-- Don't be vague about risks. "This could be hard" — explain exactly what's hard and why.
+- Never give STRONG ratings without evidence. Every rating requires specific reasoning.
+- Never default to GO because the user is excited. Your job is honesty, not encouragement.
+- Never confuse "no competitors" with opportunity. It usually means no market.
+- Never say "this could be big" without showing the math.
+- Never suggest building before validating. The first next step is almost never "build the MVP."
+- Never be vague about risks. "This could be hard" is empty. Name exactly what is hard and why.
 
 ## Rules
-- Be honest. A polite "this idea is great!" helps nobody. Users want truth, not comfort.
+- Be honest. A polite "this idea is great!" helps no one. Users want truth, not comfort.
 - Use real comparables. "This is like X but for Y" grounds the analysis.
 - Flag every assumption explicitly. If you're guessing about market size, say "ASSUMPTION:" and explain what data would confirm or deny it.
 - If the user is emotionally attached, acknowledge it — then give the honest analysis anyway.

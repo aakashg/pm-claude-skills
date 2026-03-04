@@ -12,18 +12,18 @@ Ask:
 3. What's the platform? (Web, mobile, tablet)
 4. What stage is this? (Early concept, ready for eng, post-launch iteration)
 
-If the user shares a screenshot or image, analyze it directly. If they describe the design in text, ask for a screenshot or more detail before reviewing.
+If the user shares a screenshot or image, analyze it directly. If they describe the design in text, request a screenshot or more detail before reviewing.
 
 ### Step 2: Start with What Works
-Before any criticism, call out 2-3 things the design does well. This isn't politeness — it identifies strengths to preserve during iteration.
+Before any criticism, identify 2-3 things the design does well. This is not politeness — it flags strengths to preserve during iteration.
 
 ### Step 3: Review Framework
 
-Evaluate across these 6 dimensions. Not every dimension will have issues — only flag the ones that matter.
+Evaluate across these 6 dimensions. Only flag dimensions with real issues.
 
 **1. Clarity (Can users figure out what to do?)**
 - Can a new user identify the primary action within 5 seconds?
-- Is there clear visual hierarchy? (One thing should dominate the page)
+- Is there clear visual hierarchy? (One element must dominate the page)
 - Are labels descriptive? ("Save draft" vs. "Save" vs. an ambiguous icon)
 - Is the current state obvious? (Where am I? What have I done? What's next?)
 
@@ -64,10 +64,10 @@ Evaluate across these 6 dimensions. Not every dimension will have issues — onl
 Structure feedback in priority tiers:
 
 **Must Fix** (1-3 issues)
-Issues that will directly cause user confusion, drop-off, or task failure. These block launch.
+Issues that directly cause user confusion, drop-off, or task failure. Launch blockers.
 
 **Should Fix** (2-4 issues)
-Issues that degrade the experience meaningfully. Users can work around them, but shouldn't have to.
+Issues that degrade the experience meaningfully. Users can work around them but should not have to.
 
 **Consider** (1-3 issues)
 Polish items that elevate the experience. Not urgent, but worth tracking.
@@ -95,7 +95,7 @@ For each issue, provide all three:
 - The form is confusing
 ```
 
-Why it's bad: Every point is vague. "Cluttered" how? "Better UX" means nothing. No one can act on this.
+Why this fails: Every point is vague. "Cluttered" how? "Better UX" means nothing. No one can act on this.
 
 **Good feedback:**
 ```
@@ -177,7 +177,7 @@ Should Fix:
 
 ## Common Design Issues by Screen Type
 
-Use this as a checklist. Not every screen will have every issue — focus on the relevant ones.
+Use this as a checklist. Focus only on the relevant issues per screen type.
 
 **Forms:**
 - Are required fields marked? Is the marker consistent (asterisk vs. "required" label)?
@@ -211,7 +211,7 @@ Use this as a checklist. Not every screen will have every issue — focus on the
 
 ## AI-Specific UX Review
 
-When the design involves AI-powered features (chatbots, AI-generated content, smart suggestions, copilots), add these checks to the review. AI UX has distinct failure modes that traditional heuristics miss.
+When the design involves AI-powered features (chatbots, AI-generated content, smart suggestions, copilots), add these checks. AI UX has distinct failure modes that traditional heuristics miss.
 
 **Setting Expectations**
 - Does the UI communicate what the AI can and can't do? (Scope framing prevents disappointment)
@@ -243,16 +243,16 @@ Flag AI UX issues in the **Must Fix** tier when: AI output is auto-applied witho
 ---
 
 ## Anti-Patterns
-- Don't give aesthetic feedback as design feedback. "I don't like the shade of blue" is a preference. "The blue CTA doesn't have enough contrast against the blue background (2.1:1 ratio, needs 4.5:1)" is design feedback.
-- Don't redesign the entire page. Focus on the highest-impact issues within the current design direction.
-- Don't ignore the user's constraints. If they say "this ships Thursday," prioritize accordingly.
-- Don't assume a design is wrong because it's unconventional. Novel patterns can work — ask about user testing data before dismissing them.
-- Don't just list problems. Every issue needs a suggested fix. Problems without solutions are just complaints.
-- Don't critique content if the user hasn't finalized copy. Focus on layout, flow, and interaction.
+- Never give aesthetic feedback as design feedback. "I don't like the shade of blue" is a preference. "The blue CTA fails contrast against the blue background (2.1:1 ratio, needs 4.5:1)" is design feedback.
+- Never redesign the entire page. Focus on the highest-impact issues within the current design direction.
+- Never ignore the user's constraints. If they say "this ships Thursday," prioritize accordingly.
+- Never assume a design is wrong because it is unconventional. Ask about user testing data before dismissing novel patterns.
+- Never list problems without fixes. Problems without solutions are complaints.
+- Never critique content if the user has not finalized copy. Focus on layout, flow, and interaction.
 
 ## Rules
-- Always lead with what works before what doesn't. This isn't about being nice — it identifies strengths to protect.
-- Be specific. "The CTA is unclear" is useless. "The 'Submit' button should say 'Create Account' because users don't know what they're submitting" is actionable.
-- Focus on user outcomes, not personal aesthetic preferences. Every piece of feedback should trace back to "this helps/hurts the user because..."
-- If you don't have enough context, ask. Don't assume the design is for desktop if it might be mobile. Don't assume the user is new if they might be a power user.
-- Prioritize ruthlessly. 3 high-impact issues are more useful than 15 minor nitpicks.
+- Always lead with what works before what does not. This identifies strengths to protect during iteration.
+- Be specific. "The CTA is unclear" is useless. "The 'Submit' button should say 'Create Account' because users do not know what they are submitting" is actionable.
+- Focus on user outcomes, not aesthetic preferences. Every piece of feedback must trace back to user impact.
+- If context is missing, ask. Never assume desktop vs. mobile or new user vs. power user.
+- Prioritize ruthlessly. 3 high-impact issues beat 15 minor nitpicks.

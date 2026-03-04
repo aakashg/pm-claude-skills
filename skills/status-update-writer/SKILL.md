@@ -12,7 +12,7 @@ Ask:
 3. Who is the audience? (CEO, VP Eng, cross-functional team, skip-level, board)
 4. Is there bad news? (If so, I'll help you frame it with a mitigation plan)
 
-If the user pastes raw notes, Slack threads, or bullet points — extract and structure the information yourself. Don't ask the user to organize it first.
+If the user pastes raw notes, Slack threads, or bullet points, extract and structure the information directly. Never ask the user to organize it first.
 
 ### Step 2: Write the Update
 
@@ -21,7 +21,7 @@ Follow this exact structure:
 ---
 
 **TL;DR** (2 sentences max)
-The entire update if they read nothing else. Lead with the single most important thing. If there's bad news, it goes here — not buried below.
+The entire update if they read nothing else. Lead with the single most important thing. Bad news goes here, not buried below.
 
 **Status: [pick one]**
 - **On Track** — shipping on schedule, no blockers
@@ -29,10 +29,10 @@ The entire update if they read nothing else. Lead with the single most important
 - **Blocked** — cannot proceed without a decision or action from someone specific
 
 **Progress This Week**
-- Bullet points of what actually shipped or completed — not what was "worked on"
+- What actually shipped or completed — never what was "worked on"
 - Be specific: "Shipped new onboarding flow to 10% of users" not "Made progress on onboarding"
-- Include links to PRs, docs, demos, or dashboards if the user provides them
-- If a milestone was hit, call it out explicitly
+- Include links to PRs, docs, demos, or dashboards when provided
+- Call out milestones explicitly
 
 **Next Week**
 - What's planned, with owners where known
@@ -42,18 +42,18 @@ The entire update if they read nothing else. Lead with the single most important
 **Risks & Blockers**
 - Every risk gets: description, likelihood, impact, mitigation plan
 - Every blocker gets: what's blocked, who can unblock it, by when
-- If there are none, write "None currently" — don't fabricate risks to fill the section
+- If there are none, write "None currently." Never fabricate risks to fill the section
 
 **Decisions Needed** (include only if applicable)
 - State exactly what needs to be decided
 - Who needs to decide it
 - By when
-- Enough context that the reader can decide without scheduling a meeting
-- If possible, include your recommendation: "I recommend Option A because..."
+- Enough context for the reader to decide without scheduling a meeting
+- Always include a recommendation: "I recommend Option A because..."
 
 **Metrics** (include only if applicable and the user provides data)
 - Key metric: current value vs. target, trend (up/down/flat), brief interpretation
-- Don't include metrics for the sake of it — only if they tell a story
+- Only include metrics that tell a story
 
 ---
 
@@ -71,8 +71,8 @@ Adjust content and depth based on audience:
 | **Board** | Metrics, trajectory, market context | Everything operational |
 
 ### Formatting Rules
-- Total update should be under 200 words. If it's longer, you're including too much detail for the audience.
-- No filler. "We continued to make progress on..." → just say what was done.
+- Total update: under 200 words. Longer means too much detail for the audience.
+- No filler. "We continued to make progress on..." — state what was done.
 - Bad news goes above the fold, not buried at the bottom. Always pair bad news with a mitigation plan.
 - Active voice. "Team shipped the migration" not "The migration was completed."
 - Use parallel structure in bullet points. Start each with a verb.
@@ -165,21 +165,21 @@ Metrics:
 
 ## Common Mistakes to Avoid
 
-**Hiding bad news at the bottom.** If your launch date slipped, that's the TL;DR — not a footnote. Stakeholders lose trust when they discover you buried the lead.
+**Hiding bad news at the bottom.** If your launch date slipped, that is the TL;DR, not a footnote. Stakeholders lose trust when they discover you buried the lead.
 
 **Confusing activity with progress.** "Had 6 meetings about the migration" is activity. "Migrated 40% of users with 0.3% error rate" is progress. Report outcomes, not effort.
 
-**Using weasel words.** "Roughly on track," "mostly done," "some concerns" — these phrases signal you're not sure what's happening. Be precise. If you don't know, say "investigating, will update by [date]."
+**Using weasel words.** "Roughly on track," "mostly done," "some concerns" — these signal uncertainty, not status. Be precise. If unknown, say "investigating, will update by [date]."
 
-**Including everything.** A status update is not a diary. Only include information that matters to THIS audience at THIS level. Your VP doesn't need to know you refactored a utility function.
+**Including everything.** A status update is not a diary. Only include what matters to THIS audience at THIS level. Your VP does not need to know about a refactored utility function.
 
-**No action items.** Every update should make it clear: what do you need from the reader? If nothing, say so. But most "nothing needed" updates are missing something.
+**No action items.** Every update must make clear what you need from the reader. If nothing, say so. But most "nothing needed" updates are missing something.
 
 ---
 
 ## Adapting by Cadence
 
-The default format above is a weekly update. For other cadences, adjust scope and depth:
+The default format above is weekly. For other cadences, adjust scope and depth:
 
 **Daily Standup / Async Daily**
 - 3 lines max: What shipped yesterday. What's happening today. Any blockers.
@@ -211,16 +211,16 @@ When the user doesn't specify cadence, default to weekly. If they mention "month
 ---
 
 ## Anti-Patterns
-- Don't fabricate progress. If the user's raw notes are thin, the update should be thin. Don't pad it.
-- Don't hide bad news. Your job is to surface it early, with a plan. PMs who hide bad news lose trust fast.
-- Don't include items that fail the "so what?" test. If cutting a bullet wouldn't change the reader's understanding or actions, cut it.
-- Don't use passive voice to avoid ownership. "The deadline was missed" → "We missed the deadline because X. Here's the recovery plan."
-- Don't send a status update that requires a follow-up meeting to understand. The update should stand alone.
-- Don't include risks without mitigation plans. An unmitigated risk is just anxiety.
+- Never fabricate progress. If the user's raw notes are thin, the update stays thin. Never pad.
+- Never hide bad news. Surface it early, with a plan. PMs who hide bad news lose trust fast.
+- Never include items that fail the "so what?" test. If cutting a bullet changes nothing for the reader, cut it.
+- Never use passive voice to avoid ownership. "The deadline was missed" becomes "We missed the deadline because X. Here is the recovery plan."
+- Never send an update that requires a follow-up meeting to understand. The update must stand alone.
+- Never include risks without mitigation plans. An unmitigated risk is just anxiety.
 
 ## Rules
-- Never fabricate progress or inflate status. If you're behind, say so with a plan.
-- Never hide bad news. Surface it early, pair it with mitigation. Stakeholders can handle bad news. What they can't handle is surprises.
-- Every item must pass the "so what?" test — if it doesn't matter to this audience, cut it.
-- Decisions needed should include your recommendation. Don't make the reader do the analysis. "I recommend X because Y. Need sign-off by Z."
-- Match the depth to the audience. A board update has no technical details. An eng lead update has no business platitudes.
+- Never fabricate progress or inflate status. If behind, say so with a plan.
+- Never hide bad news. Surface it early, pair it with mitigation. Stakeholders handle bad news. They cannot handle surprises.
+- Every item must pass the "so what?" test. If it does not matter to this audience, cut it.
+- Always include a recommendation with decisions. Never make the reader do the analysis. "I recommend X because Y. Need sign-off by Z."
+- Match depth to audience. Board updates have no technical details. Eng lead updates have no business platitudes.
