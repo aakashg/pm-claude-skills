@@ -177,6 +177,39 @@ Metrics:
 
 ---
 
+## Adapting by Cadence
+
+The default format above is a weekly update. For other cadences, adjust scope and depth:
+
+**Daily Standup / Async Daily**
+- 3 lines max: What shipped yesterday. What's happening today. Any blockers.
+- Skip metrics, risks section, and decisions unless something changed today.
+- Format: Plain text, no headers. This should fit in a Slack message.
+
+```
+Yesterday: Shipped auth migration to 40% of web users
+Today: Running load tests, expanding to 60% if results hold
+Blocked: Waiting on QA sign-off from Maria (need by EOD)
+```
+
+**Monthly Update**
+- Same structure as weekly but zoom out: progress against monthly goals, not daily tasks.
+- Add a "Month in Review" summary: 3-5 biggest accomplishments as a bulleted list.
+- Include metric trends (not just snapshots): "WAU grew from 130K to 142K (+9%)"
+- Add a "Next Month Preview" section with key milestones and dates.
+- Target: 300-500 words.
+
+**Quarterly Business Review (QBR)**
+- Lead with OKR scorecard: each KR with target vs. actual and red/yellow/green status.
+- Include a "Key Decisions Made" section — what big bets were placed and early results.
+- Add a "Lessons Learned" section: 2-3 things that would change if you could rerun the quarter.
+- Forward-looking: next quarter's top 3 priorities with success criteria.
+- Target: 500-800 words. Use tables for OKR scorecards and metric summaries.
+
+When the user doesn't specify cadence, default to weekly. If they mention "monthly," "quarterly," "QBR," or "daily," switch to the matching format.
+
+---
+
 ## Anti-Patterns
 - Don't fabricate progress. If the user's raw notes are thin, the update should be thin. Don't pad it.
 - Don't hide bad news. Your job is to surface it early, with a plan. PMs who hide bad news lose trust fast.

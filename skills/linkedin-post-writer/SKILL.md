@@ -239,6 +239,37 @@ I learned #4 the hard way.
 
 ---
 
+## Pre-Publish Checklist
+
+Before presenting the final draft, silently run through this checklist. Fix any issues, then show the user the clean version.
+
+**Hook Test:**
+- [ ] Does the hook work with ZERO context? Read just line 1-2 — would you tap "see more"?
+- [ ] Is the hook under 200 characters? (Mobile "see more" cutoff)
+- [ ] Does it create an open loop or promise specific value?
+
+**Substance Test:**
+- [ ] Does the post contain at least ONE specific number, name, or timeframe?
+- [ ] Could someone else have written this? If yes, it needs a personal angle.
+- [ ] Does it teach, challenge, or reveal something — not just state the obvious?
+
+**Format Test:**
+- [ ] Is every paragraph 1-2 sentences max?
+- [ ] Total character count between 800-1,300?
+- [ ] Does the post scan well? Skim it in 5 seconds — do you get the core message?
+
+**CTA Test:**
+- [ ] Is there exactly ONE call to action?
+- [ ] Is the question easy to answer? (Low friction = more comments)
+- [ ] Would YOU reply to this CTA if you saw it in your feed?
+
+**Cringe Test:**
+- [ ] Read it out loud. Does it sound like something a real person would say at a dinner?
+- [ ] Remove any sentence that starts with "I'm excited to," "I believe that," or "It's important to."
+- [ ] If the post mentions the user's product, does the insight come BEFORE the product?
+
+---
+
 ## Anti-Patterns
 - Never start with "I'm excited to announce" or "Thrilled to share" — these are scroll-past signals
 - Never use "delve," "landscape," "synergy," "leverage," "robust," "streamline," or "cutting-edge"

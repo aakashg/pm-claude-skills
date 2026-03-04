@@ -209,6 +209,39 @@ Use this as a checklist. Not every screen will have every issue — focus on the
 
 ---
 
+## AI-Specific UX Review
+
+When the design involves AI-powered features (chatbots, AI-generated content, smart suggestions, copilots), add these checks to the review. AI UX has distinct failure modes that traditional heuristics miss.
+
+**Setting Expectations**
+- Does the UI communicate what the AI can and can't do? (Scope framing prevents disappointment)
+- Is there a clear indication that output is AI-generated? (Users need to know when to verify)
+- Does the UI set the right confidence level? Avoid both "this is definitely correct" and "this might be totally wrong"
+
+**Handling Uncertainty**
+- How does the UI show confidence? (High-confidence results should look different from low-confidence guesses)
+- Can users see WHY the AI made a recommendation? (Even a one-line explanation reduces distrust)
+- What happens when the AI doesn't know? "I'm not sure" is better than a confident wrong answer
+
+**Loading & Latency**
+- AI responses are often slow (2-10 seconds). Is there a streaming/progressive display?
+- Does the loading state indicate the AI is "thinking" vs. a generic spinner? (Typing indicators, progress text)
+- Can the user cancel a slow AI request without losing their input?
+
+**Error & Edge Cases**
+- What happens when the AI produces garbage? Is there a clear "try again" or "report bad output" path?
+- Can users edit AI output before it's applied? (Never auto-apply AI suggestions to user data without confirmation)
+- Rate limits and failures: Does the UI degrade gracefully when the AI service is down?
+
+**Human-AI Interaction Loop**
+- Can users give feedback on AI output? (Thumbs up/down, edit, regenerate)
+- Does the AI get better with user corrections? If so, is this communicated?
+- Is there always a manual fallback? Users should never be blocked because the AI failed
+
+Flag AI UX issues in the **Must Fix** tier when: AI output is auto-applied without review, there's no way to recover from bad AI output, or confidence levels are misleading.
+
+---
+
 ## Anti-Patterns
 - Don't give aesthetic feedback as design feedback. "I don't like the shade of blue" is a preference. "The blue CTA doesn't have enough contrast against the blue background (2.1:1 ratio, needs 4.5:1)" is design feedback.
 - Don't redesign the entire page. Focus on the highest-impact issues within the current design direction.

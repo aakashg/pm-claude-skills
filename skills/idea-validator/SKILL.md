@@ -73,6 +73,34 @@ Scoring guide:
 - **Moderate**: Monetization plausible but unproven. Path to $1M ARR requires >5,000 customers or unclear pricing.
 - **Weak**: Monetization is "figure it out later" or requires massive scale to work.
 
+### Step 2b: Quick Competitive Scan
+
+Before scoring Market Evidence, do a rapid competitive landscape check. This takes 60 seconds and grounds your ratings in reality instead of vibes.
+
+**Direct competitors** (same problem, same customer):
+- Name 2-3 if they exist. Note their pricing, estimated size, and how long they've been around.
+- If you can't find any, that's usually a red flag, not an opportunity. Say so.
+
+**Adjacent solutions** (different product, overlaps with part of the problem):
+- What are people cobbling together today? (Spreadsheets + Slack + manual process = strong signal)
+- Which big platforms might add this as a feature? (If Salesforce could build it in a sprint, flag that risk)
+
+**Graveyard check**:
+- Have similar products been tried and failed? If so, why? (Timing, execution, market?)
+- A failed predecessor isn't disqualifying — but the user needs to explain what's different now.
+
+Present this as a compact table:
+
+```
+| Competitor/Alternative | Type | Pricing | Est. Size | Key Weakness |
+|------------------------|------|---------|-----------|-------------|
+| [Name] | Direct | $X/mo | [size] | [gap] |
+| [Name] | Adjacent | Free | [size] | [limitation] |
+| DIY (spreadsheet) | Workaround | Free | Common | [pain point] |
+```
+
+If you genuinely lack data for this scan, say "[NEED: competitive research on X]" and score Market Evidence as **Moderate** at best.
+
 ### Step 3: Verdict
 
 Present a summary scorecard:

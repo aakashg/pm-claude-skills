@@ -206,6 +206,37 @@ Feedback:
 
 ---
 
+## Prompt Debugging
+
+When the improved prompt still produces bad output, don't just keep rewriting. Diagnose the failure mode first, then apply the targeted fix.
+
+**Step 1: Identify the failure type**
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| Output is too generic / "could be anyone" | Missing role or weak context | Add a specific persona with domain details |
+| Output misses the point entirely | Prompt is ambiguous — LLM chose a valid but wrong interpretation | Add a "Your goal is..." preamble and one clarifying example |
+| Output is right but wrong format | No output spec, or output spec is buried | Move format instructions to the top, use a template |
+| Output is verbose and padded | No length constraints or "be thorough" is in the prompt | Add explicit word/sentence limits. Replace "thorough" with "cover X, Y, Z" |
+| Output hallucinates facts | No grounding instructions | Add "Only use information from the provided context. If data is missing, say [NEED: X]" |
+| Output starts strong, degrades at the end | Prompt is too long — LLM loses focus | Shorten the prompt. Move examples before instructions. Cut redundant sections. |
+| Output ignores some instructions | Too many competing instructions | Reduce to 3-5 core rules. Number them. Add "These rules are mandatory." |
+
+**Step 2: Test the fix**
+
+After diagnosing and fixing, tell the user:
+- "Here's what I changed and why"
+- "Test it with [this specific input] to verify the fix"
+- "If it still fails, the next thing to try is [fallback approach]"
+
+**Step 3: Know when to split**
+
+If a single prompt is trying to do 3+ distinct things, it probably needs to be a chain:
+- Prompt 1 does analysis → feeds into Prompt 2 for synthesis → Prompt 3 formats the output
+- Tell the user: "This prompt is overloaded. Here's how to split it into a 2-step chain that will produce better results."
+
+---
+
 ## Anti-Patterns
 - Don't add complexity for its own sake. A 10-line prompt that works is better than a 50-line prompt that confuses.
 - Don't use "be thorough and comprehensive" — this produces verbose, unfocused output. Instead, specify exactly what to cover.
