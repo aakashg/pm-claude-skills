@@ -7,6 +7,8 @@
 
 Each skill triggers on natural language. Say "write a LinkedIn post" or "validate this idea" and Claude follows the playbook.
 
+Every skill here follows all **[10 Laws of a Great Claude Skill](LAWS.md)** — the patterns that survived 75 test runs across 25 skills. YAML frontmatter engineered for routing, constraints in the top 100 lines, a read-first table, an output template, one worked example, a table that pre-empts the shortcuts Claude takes, an exit checklist, and a handoff to the next skill.
+
 **All 5 skills are fully functional. I wrote a deep dive breaking down 6 additional skills: the reasoning behind each one, how I built them, and what makes them work.**
 
 **[Read the full skill breakdown →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
@@ -57,9 +59,35 @@ Then open Claude Code in your project. Say "write a LinkedIn post" or "validate 
 
 ## How Skills Work
 
-Claude Code skills are markdown files in `.claude/skills/` that load on demand. When your input matches a skill's trigger, Claude reads the SKILL.md and follows its instructions.
+Claude Code skills are markdown files in `.claude/skills/` that load on demand. At startup Claude reads only each skill's `name` and `description` from its YAML frontmatter. When your request matches, it loads the full SKILL.md and follows it.
 
-Think of them as playbooks: each skill encodes a specific workflow so Claude produces consistent, high-quality output every time.
+That first sentence is the whole game. If the description does not name the phrases you actually type, the skill never loads and nothing else in it matters. This is Law 1, and it is the most common reason a skill "doesn't work."
+
+```yaml
+---
+name: status-update-writer
+description: Use when the user asks to write a status update, weekly or monthly update, stakeholder update, project update, standup, status report, or QBR. Do NOT use for writing a PRD or a retro doc — those need different structures.
+---
+```
+
+Think of the body as a playbook: each skill encodes a specific workflow so Claude produces the same shape of output every run.
+
+### Anatomy of a skill in this repo
+
+Every SKILL.md here has the same eight parts, in this order:
+
+| Part | Why it exists |
+|------|---------------|
+| YAML frontmatter | Routing. Claude only sees this at startup |
+| `## Step 0 — Read first` | Without a source table, Claude invents the analysis from training data |
+| `## Constraints` | Rules below line 100 stop firing. They go up top |
+| `## Existence check` | Refuses the two-hour deliverable for a thing that was never going to ship |
+| `## Output template` | Exact fields, exact order — so three runs produce three identical structures |
+| `## Example` | One worked example outperforms five rules |
+| `## Shortcuts Claude takes` | Pre-empts the rationalization before Claude acts on it |
+| `## Exit checklist` + `## Next` | Nothing ships with a placeholder in it; the skill routes you onward |
+
+Long background material lives in `references/` inside each skill folder, so the SKILL.md body stays short enough to be read in full. Full reasoning for each part is in [LAWS.md](LAWS.md).
 
 ### Combining Skills with CLAUDE.md
 
@@ -76,21 +104,35 @@ This separation matters: CLAUDE.md loads every session; skills load only when tr
 
 These skills are starting points. Fork and adapt:
 
-1. **Add your company context** — Replace generic examples with real ones from your product. A status update skill that knows your OKR format is 10x more useful.
-2. **Tune the output format** — If your VP prefers a different structure, change it. The skill must match how your org actually communicates.
-3. **Add your anti-patterns** — Every team has recurring mistakes. Add them to the relevant skill's anti-patterns section.
+1. **Add your company context** — Replace the worked example with a real one from your product. A status update skill that knows your OKR format is 10x more useful.
+2. **Tune the output template** — If your VP prefers a different structure, change the `## Output template` block. That block is what every run reproduces.
+3. **Add your shortcuts** — When Claude skips a step, add the rationalization to the `## Shortcuts Claude takes` table. Naming it is what stops it.
+4. **Extend the exit checklist** — Every recurring mistake becomes a checkbox. That is the self-improvement loop.
 
 ### Troubleshooting
 
 **Skills aren't triggering:**
+- Check the frontmatter. No `name` and `description` in YAML at the top means the skill is invisible to routing — this is the #1 cause
+- Widen the `description`. It must contain the phrases you actually type, in third person. A short description matches nothing
 - Check the path: skills must be in `.claude/skills/[skill-name]/SKILL.md` (not `skills/` at the project root)
 - Make sure the file is named exactly `SKILL.md` (case-sensitive)
-- Try using the exact trigger phrase from the skill (e.g., "write a LinkedIn post")
 
 **Output quality is inconsistent:**
-- Add more examples to the skill's Examples section. Examples teach Claude patterns faster than instructions
-- Verify your CLAUDE.md does not contradict the skill's instructions
+- Check that your `## Output template` gives exact fields in an exact order. A description of the format produces a different format each run
+- Add one full worked example rather than more rules. Examples teach faster than instructions
+- Move your constraints above line 100. Rules near the bottom of a long file stop firing
+- Verify your CLAUDE.md does not contradict the skill
 - Use `/clear` between unrelated tasks to prevent context bleed
+
+**Claude skips a step:**
+- Add the shortcut to the `## Shortcuts Claude takes` table with the reason it is wrong. Instructing harder does not work; pre-refuting the rationalization does
+
+**Output ships with placeholders in it:**
+- Add to the `## Exit checklist`: any `[bracket]` left in the output is an automatic unchecked box
+
+### Keep the loop running
+
+After any session where you corrected the output, ask: what did I regenerate? That is the gap. Fix the skill, not the prompt, and it stops happening.
 
 ## Want More?
 
@@ -124,47 +166,36 @@ mkdir -p .claude/skills/your-skill-name
 
 ### Step 3: Write the SKILL.md
 
-Use the template below (also available at `templates/SKILL-TEMPLATE.md`):
+Copy `templates/SKILL-TEMPLATE.md`. It has the 10 laws built into its section order, with a comment on each explaining the failure it prevents.
 
-```markdown
-# Skill: [Skill Name]
-
-## Trigger
-Activate this skill when the user asks to [describe trigger condition].
-
-## Context
-[Background knowledge Claude needs. Industry terms, frameworks, assumptions.]
-
-## Instructions
-1. [Step-by-step rules for Claude to follow]
-2. [Be specific — vague instructions produce vague output]
-3. [Include decision points: "If X, do Y. Otherwise, do Z."]
-
-## Output Format
-[Describe the expected structure: headings, bullet points, tables, length]
-
-## Examples
-
-### Example 1
-**Input:** [What the user says]
-**Output:** [What Claude should produce]
-
-### Example 2
-**Input:** [Another scenario]
-**Output:** [Expected result]
-
-## Anti-patterns
-- [Common mistakes to avoid]
-- [Things this skill should NOT do]
+```bash
+cp templates/SKILL-TEMPLATE.md .claude/skills/your-skill-name/SKILL.md
 ```
+
+Fill it top to bottom. The three that carry the most weight:
+
+**Frontmatter.** Third person, names the phrases users actually type, and names what the skill is *not* for. This is the only part Claude reads before deciding whether to load anything else.
+
+```yaml
+---
+name: your-skill-name
+description: Use when the user asks to X, Y, or Z. Do NOT use for W — use /w instead.
+---
+```
+
+**Output template.** Give exact fields in an exact order, not a description of the structure. This is the difference between three consistent runs and three different documents.
+
+**One worked example.** A real input and the complete output at full quality. One example beats a dozen rules.
+
+Keep the body under 500 lines and put long background material in `references/` next to the SKILL.md, the way every skill in this repo does.
 
 ### Step 4: Test It
 
 1. Drop the skill into `.claude/skills/` in any project
 2. Start a Claude Code session
-3. Ask Claude to perform the task described in your trigger
-4. Evaluate the output — does it match your expectations?
-5. Refine the SKILL.md based on what went wrong
+3. Ask using the phrasing you would actually use — not the trigger words you wrote. If it does not load, the description is too narrow
+4. Run it three times on the same input. If the structure differs across runs, your output template is a description rather than a template
+5. Refine the SKILL.md based on what went wrong. Every correction becomes a checklist item or a row in the shortcuts table
 
 ### Step 5: Share It
 

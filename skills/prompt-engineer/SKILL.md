@@ -1,85 +1,120 @@
-# Prompt Engineer
-
-## Trigger
-Activate when the user asks to "improve this prompt", "make this prompt better", "optimize this prompt", "prompt engineer this", or "rewrite this prompt".
-
-## Behavior
-
-### Step 1: Analyze the Current Prompt
-
-Read the user's prompt and diagnose issues across these dimensions:
-
-| Dimension | What to Check |
-|-----------|--------------|
-| **Role** | Is there a specific role/persona? Generic "you are an expert" doesn't count. |
-| **Context** | Does the LLM have enough background to do the task well? |
-| **Instructions** | Are steps explicit and ordered? Or vague and open to interpretation? |
-| **Output format** | Is the expected structure defined? (Headers, bullets, length, tone) |
-| **Examples** | Are there input/output pairs showing what "good" looks like? |
-| **Constraints** | Are there explicit DO/DON'T rules? Edge cases handled? |
-| **Evaluation** | Can the LLM self-check its output against clear criteria? |
-
-### Step 2: Apply Techniques
-
-Apply the relevant techniques below. Match the technique to the problem — not every prompt needs every technique.
-
-**Role Priming**
-Give the LLM a specific identity with relevant experience. Specificity drives output quality.
-- Weak: "You are a helpful assistant"
-- Better: "You are a senior product manager"
-- Best: "You are a senior PM at a B2B SaaS company with 10 years of experience. You've shipped 20+ features and written 100+ PRDs. You're known for concise, metrics-driven specs."
-
-**Structured Output**
-Define the exact format. Specify fields, order, and length — never just "give me a summary."
-- Weak: "Summarize this article"
-- Best: "Summarize this article in exactly 3 bullet points. Each bullet: one sentence, under 20 words, focused on actionable takeaways for a PM audience."
-
-**Chain of Thought**
-For complex reasoning, force the LLM to show its work. This dramatically improves accuracy on multi-step problems:
-- Add: "Think through this step by step before giving your final answer."
-- Or: "First, identify the key factors. Then, analyze each one. Finally, synthesize into a recommendation."
-
-**Few-Shot Examples**
-Add 1-3 input/output pairs showing what good looks like. Include at least one edge case.
-- Examples must demonstrate the quality bar, format, and tone expected.
-- One great example outweighs 50 words of instruction.
-
-**Constraints (DO/DON'T)**
-Explicit rules prevent the most common failure modes:
-- "DO: Use specific metrics. Cite the data I provided. Flag assumptions."
-- "DON'T: Use jargon without defining it. Make up statistics. Exceed 500 words."
-
-**Evaluation Criteria**
-Direct the LLM to verify its own output before responding.
-- "Before responding, verify: (1) every recommendation has a supporting reason, (2) all metrics are from the data provided, (3) the total length is under 300 words."
-
-**Delimiter Separation**
-Use clear delimiters to separate instructions from input data. This prevents the LLM from confusing instructions with content it should process.
-- Use triple backticks, XML tags, or clear headers: "INPUT DATA:" / "INSTRUCTIONS:"
-
-### Step 3: Show the Improvement
-
-Present the improved prompt in a code block. Then add:
-
-**What changed and why:**
-- [Technique] → [what problem it fixes]
-- [Technique] → [what problem it fixes]
-
-### Step 4: Offer to Iterate
-"Want me to add examples, adjust the tone, tune it for a specific LLM, or make it shorter?"
-
+---
+name: prompt-engineer
+description: Use when the user asks to improve, optimize, rewrite, debug, or shorten a prompt, or asks why a prompt is producing bad output. Do NOT use for writing a Claude Code SKILL.md — that needs skill structure rules, not prompt techniques.
 ---
 
-## Full Before/After Examples
+# Prompt Engineer
 
-### Example 1: Vague Prompt → Specific Prompt
+Diagnose a prompt, rewrite it, and show exactly what changed and why.
+
+## Step 0 — Read first
+
+| Source | Path | What to extract |
+|--------|------|-----------------|
+| The prompt | whatever the user pasted | Actual wording — never paraphrase before diagnosing |
+| Failing output | the output they got, if provided | The failure mode; this determines the fix |
+| Project context | `CLAUDE.md` | Audience, product, banned words, output preferences |
+| Technique reference | `references/techniques.md` | Full before/after examples for each technique |
+
+If the user pasted a prompt but no failing output, ask for one example of what it produced. Diagnosing from the prompt alone guesses at the failure mode.
+
+## Constraints
+
+Mandatory.
+
+- Always show before and after. The user must see the diff, not just the result.
+- Explain every change by the problem it solves, not the technique name alone.
+- Preserve the user's intent. Improve how they ask, never what they are asking for.
+- Right-size the fix. A 10-line prompt that works beats a 50-line prompt that confuses.
+- Never add chain-of-thought to a simple generative task like "write a tweet."
+- Never write "be thorough and comprehensive." Name exactly what to cover.
+- Never add a role that does not match the task.
+- Never add a few-shot example below the quality bar you expect back. Bad examples teach bad patterns.
+- If the prompt is longer than its expected output on an analytical task, it is too long. Cut it.
+
+## Existence check
+
+Before rewriting, verify:
+
+1. **The prompt itself** — the literal text, not a description of it.
+2. **The goal** — what the user wants the output to do or be used for.
+3. **The failure** — what the current output gets wrong, ideally with a sample.
+
+If two of three are missing, do not rewrite. Ask for exactly those. Rewriting a prompt without knowing how it fails produces a longer prompt, not a better one.
+
+## Step 1 — Diagnose
+
+Score the prompt across these dimensions. Name which ones fail.
+
+| Dimension | What to check |
+|-----------|---------------|
+| Role | Is there a specific persona? Generic "you are an expert" does not count. |
+| Context | Does the model have enough background to do the task well? |
+| Instructions | Are steps explicit and ordered, or vague and open to interpretation? |
+| Output format | Is structure defined — headers, fields, length, tone? |
+| Examples | Are there input/output pairs showing what good looks like? |
+| Constraints | Are there explicit DO/DON'T rules? Edge cases handled? |
+| Evaluation | Can the model self-check its output against clear criteria? |
+
+## Step 2 — Match the failure to the fix
+
+If the user provided failing output, use this table instead of guessing.
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| Generic, "could be anyone" | Missing role or weak context | Add a specific persona with domain details |
+| Misses the point entirely | Ambiguous — model chose a valid but wrong reading | Add a "Your goal is..." preamble and one clarifying example |
+| Right content, wrong format | No output spec, or it is buried | Move format to the top, use a template |
+| Verbose and padded | No length limit, or "be thorough" is present | Explicit word limits. Replace "thorough" with "cover X, Y, Z" |
+| Hallucinates facts | No grounding instruction | "Only use the provided context. If data is missing, say [NEED: X]" |
+| Strong start, weak finish | Prompt too long, focus decays | Shorten. Move examples before instructions. Cut redundancy. |
+| Ignores some instructions | Too many competing rules | Reduce to 3–5 numbered rules. Add "These rules are mandatory." |
+
+If the prompt is trying to do 3+ distinct things, do not rewrite it — split it into a chain and say so.
+
+## Step 3 — Apply techniques
+
+Match technique to the diagnosed problem. Not every prompt needs every technique. Full before/after examples for each are in `references/techniques.md`.
+
+- **Role priming** — specific identity with relevant experience
+- **Structured output** — exact fields, order, and length
+- **Chain of thought** — only for multi-step reasoning
+- **Few-shot examples** — 1–3 pairs including one edge case
+- **Constraints** — explicit DO / DON'T
+- **Evaluation criteria** — self-check before responding
+- **Delimiter separation** — separate instructions from input data
+
+## Output template
+
+Exact sections, exact order.
+
+~~~
+## Diagnosis
+[2-3 sentences. Which dimensions fail and what that causes in the output.]
+
+## Improved prompt
+```
+[The full rewritten prompt, copy-pasteable, nothing else in the block]
+```
+
+## What changed and why
+- [Technique] → [the specific problem it fixes]
+- [Technique] → [the specific problem it fixes]
+- [Technique] → [the specific problem it fixes]
+
+## How to test it
+Run it with [specific input]. You should see [specific difference].
+If it still fails, try [fallback].
+~~~
+
+## Example
 
 **Before:**
 ```
 Write a competitive analysis of Notion.
 ```
 
-Problems: No role, no structure, no audience, no scope, no output format. The LLM will produce a generic, rambling overview:
+**Diagnosis:** No role, no structure, no audience, no scope, no output format. The model will produce a generic overview of everything Notion does, at whatever length it picks.
 
 **After:**
 ```
@@ -109,145 +144,46 @@ Rules:
 - Keep total output under 800 words.
 ```
 
-**What changed:**
-- Role priming → LLM writes from a strategic perspective, not generic
-- Structured output → Ensures consistent, complete analysis
-- Constraints → Prevents vague filler and controls length
-- Scope → "AI features specifically" prevents a surface-level overview of everything
+**What changed and why:**
+- Role priming → output comes from a strategic angle instead of an encyclopedia entry
+- Structured output → every run returns the same four sections, so runs are comparable
+- Scope narrowing ("AI features specifically") → prevents a shallow survey of the whole product
+- Grounding rule → replaces invented statistics with a visible gap marker
+- Length cap → forces selection instead of padding
 
-### Example 2: Weak Few-Shot → Strong Few-Shot
+**How to test it:** Run both versions. The original will open with "Notion is an all-in-one workspace." The rewrite will open with a named feature and a pricing tier.
 
-**Before:**
-```
-Rewrite these feature requests as user stories.
+Two more full before/afters — weak few-shot → strong few-shot, and over-engineered → right-sized — are in `references/techniques.md`.
 
-Feature requests:
-- We need better search
-- Users want dark mode
-- Add CSV export
-```
+## Shortcuts Claude takes
 
-Problems: No format specified, no quality bar shown, no context about the product.
+| What Claude might think | Why it's wrong |
+|-------------------------|----------------|
+| "I'll make it more detailed" | Length is not quality. Most broken prompts get better by cutting. |
+| "Add a role to be safe" | An irrelevant role ("world-class neurosurgeon" on a marketing brief) adds noise. |
+| "The user knows what changed, skip the diff" | The diff is the teaching. Without it they cannot improve the next prompt themselves. |
+| "I'll improve the task while I'm here" | Never change what they are asking for. Only how they ask it. |
+| "One example is enough, I'll write it quickly" | A sloppy example teaches sloppiness. The example is the quality bar. |
+| "This prompt does five things, I'll just tighten it" | Five things needs a chain, not a tighter paragraph. Say so. |
 
-**After:**
-```
-You are a PM turning raw feature requests into user stories for an engineering team.
+## Exit checklist
 
-For each request, produce:
-- User story (As a [user type], I want [action] so that [outcome])
-- Acceptance criteria (2-3 testable conditions)
-- One edge case to consider
+Not complete until every box is checked. Any `[bracket]` placeholder left in the improved prompt is an automatic unchecked box.
 
-EXAMPLE:
-Request: "Customers want to undo actions"
-User story: As a document editor, I want to undo my last 10 actions so that I can experiment without fear of losing work.
-Acceptance criteria:
-- Cmd+Z undoes the most recent action within 200ms
-- Undo stack preserves the last 10 actions per session
-- Undo is disabled (greyed out) when no actions exist in the stack
-Edge case: What happens if the user undoes a collaborative edit that another user has already built upon?
+- [ ] Existence check passed, or missing inputs requested
+- [ ] Diagnosis names the specific failing dimensions
+- [ ] Improved prompt is in one clean code block, copy-pasteable
+- [ ] Every change is listed with the problem it fixes
+- [ ] The improved prompt preserves the user's original intent
+- [ ] Length is proportionate to the task — no bloat added
+- [ ] No banned filler ("be thorough and comprehensive")
+- [ ] Any few-shot example meets the quality bar expected back
+- [ ] A concrete test input and expected difference are given
+- [ ] A fallback is named for if it still fails
+- [ ] No placeholders remain
 
-Now process these requests:
-Product context: B2B project management tool for mid-market teams (50-200 people).
+## Next
 
-Feature requests:
-- We need better search
-- Users want dark mode
-- Add CSV export
-```
-
-**What changed:**
-- Few-shot example → Shows the exact quality bar and format expected
-- Product context → User stories will be specific to the actual product
-- Edge case requirement → Forces the LLM to think beyond the happy path
-- Structured output → Consistent format across all stories
-
-### Example 3: Over-Engineered → Right-Sized
-
-**Before (too complex):**
-```
-You are an expert-level product management consultant with 20 years of
-experience across consumer, enterprise, and marketplace products. You have
-deep expertise in behavioral economics, jobs-to-be-done theory, the Kano
-model, and design thinking. You have consulted for Fortune 500 companies
-and high-growth startups alike. You approach every problem with a blend of
-quantitative rigor and qualitative empathy. You always consider second-order
-effects and systemic implications.
-
-Please analyze the following customer feedback and provide a comprehensive
-multi-dimensional assessment including but not limited to: sentiment analysis,
-theme clustering, priority scoring using the RICE framework, impact mapping,
-root cause analysis using the 5 Whys methodology, and strategic recommendations
-aligned with OKR best practices.
-
-[50 more lines of instructions...]
-```
-
-Problems: Prompt is longer than the output. Role is impossibly broad. Instructions request 8+ frameworks for a simple task. The LLM will produce mediocre output across all dimensions instead of strong output on what actually matters.
-
-**After (right-sized):**
-```
-Analyze this customer feedback. Group by theme, rank by frequency, and flag the top 3 issues I should act on.
-
-For each top issue:
-- How many customers mentioned it
-- Representative quote
-- Suggested next step
-
-Feedback:
-[paste feedback here]
-```
-
-**What changed:**
-- Removed bloated role (unnecessary for this task)
-- Cut 8 frameworks down to the one that matters (theme clustering + prioritization)
-- Clear, scannable output format
-- The prompt is shorter than the expected output, which is almost always the right ratio for analytical tasks
-
----
-
-## Prompt Debugging
-
-When the improved prompt still produces bad output, stop rewriting. Diagnose the failure mode first, then apply the targeted fix.
-
-**Step 1: Identify the failure type**
-
-| Symptom | Likely Cause | Fix |
-|---------|-------------|-----|
-| Output is too generic / "could be anyone" | Missing role or weak context | Add a specific persona with domain details |
-| Output misses the point entirely | Prompt is ambiguous — LLM chose a valid but wrong interpretation | Add a "Your goal is..." preamble and one clarifying example |
-| Output is right but wrong format | No output spec, or output spec is buried | Move format instructions to the top, use a template |
-| Output is verbose and padded | No length constraints or "be thorough" is in the prompt | Add explicit word/sentence limits. Replace "thorough" with "cover X, Y, Z" |
-| Output hallucinates facts | No grounding instructions | Add "Only use information from the provided context. If data is missing, say [NEED: X]" |
-| Output starts strong, degrades at the end | Prompt is too long — LLM loses focus | Shorten the prompt. Move examples before instructions. Cut redundant sections. |
-| Output ignores some instructions | Too many competing instructions | Reduce to 3-5 core rules. Number them. Add "These rules are mandatory." |
-
-**Step 2: Test the fix**
-
-After diagnosing and fixing, tell the user:
-- "Here's what I changed and why"
-- "Test it with [this specific input] to verify the fix"
-- "If it still fails, the next thing to try is [fallback approach]"
-
-**Step 3: Know when to split**
-
-If a single prompt is trying to do 3+ distinct things, it probably needs to be a chain:
-- Prompt 1 does analysis → feeds into Prompt 2 for synthesis → Prompt 3 formats the output
-- Tell the user: "This prompt is overloaded. Here's how to split it into a 2-step chain that will produce better results."
-
----
-
-## Anti-Patterns
-- Never add complexity for its own sake. A 10-line prompt that works beats a 50-line prompt that confuses.
-- Never use "be thorough and comprehensive" — it produces verbose, unfocused output. Specify exactly what to cover.
-- Never assign a role that mismatches the task. "You are a world-class neurosurgeon" adds nothing to a marketing brief.
-- Never add few-shot examples below the quality bar you expect back. Bad examples teach bad patterns.
-- Always test. Run the improved prompt to verify it actually produces better output.
-- Never override the user's intent. Improve HOW they ask, not WHAT they are asking for.
-
-## Rules
-- Always show before and after. The user must see what changed and why.
-- Explain each change in terms of the problem it solves, not just the technique name.
-- Preserve the user's intent. Improve the prompt, not the task.
-- Right-size the improvement. Simple tasks need simple prompts. Never add chain-of-thought to "write a tweet."
-- When in doubt, add one great example rather than more instructions. Examples teach faster than rules.
+- If the prompt turned out to need 3+ chained steps → recommend building it as a skill instead, using `templates/SKILL-TEMPLATE.md`.
+- If the prompt is one the user runs weekly → recommend turning it into a skill so it stops living in a scratch file.
+- If the underlying task is writing a status update, a LinkedIn post, or a design review → recommend the matching skill rather than a custom prompt.
