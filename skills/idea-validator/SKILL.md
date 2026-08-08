@@ -1,224 +1,176 @@
+---
+name: idea-validator
+description: Use when the user asks to validate a product idea, stress-test an idea, evaluate whether an idea is good, or decide whether to build something. Do NOT use for prioritizing an existing backlog or reviewing a shipped feature — those need RICE scoring or a design review instead.
+---
+
 # Idea Validator
 
-## Trigger
-Activate when the user asks to "validate this idea", "is this idea good", "stress test this", "evaluate this product idea", or "should I build [X]".
+Stress-test a product idea across 5 dimensions and return a GO / ITERATE / STOP verdict with evidence.
 
-## Behavior
+## Step 0 — Read first
 
-### Step 1: Understand the Idea
+| Source | Path | What to extract |
+|--------|------|-----------------|
+| Project context | `CLAUDE.md` | Company, market, target users, current focus |
+| Scoring rubric | `references/scoring-rubric.md` | Strong/Moderate/Weak bar for each dimension |
+| User's materials | any doc, deck, or notes they name | Actual customer quotes, usage data, pricing research |
+| Existing research | `docs/`, `research/` if present | Prior validation on the same problem |
+
+If the user names no materials, say so explicitly in the verdict. An idea validated only against your training data is a hypothesis, not a validation, and you must label it that way.
+
+## Constraints
+
+Mandatory. These override the user's enthusiasm.
+
+- Every rating requires 3–5 sentences of specific reasoning. A rating with no evidence is invalid.
+- Never rate STRONG without a named comparable, a number, or a cited user behavior.
+- Never default to GO because the user is excited. Honesty is the deliverable.
+- Never treat "no competitors" as opportunity. It usually means no market. Say so.
+- Never recommend "build the MVP" as the first next step.
+- Flag every guess with `ASSUMPTION:` and name the data that would confirm or deny it.
+- Flag every missing input with `[NEED: X]`.
+- Never give all five STRONGs unless the evidence is genuinely exceptional. Most ideas are a mix.
+- Name what is hard and why. "This could be challenging" is not a risk.
+
+## Existence check
+
+Before scoring anything, verify three things:
+
+1. **Problem** — a specific pain, stated in the user's own words, with a frequency.
+2. **User** — a named segment: job title, company size, situation. "Everyone" and "businesses" fail this check.
+3. **Evidence** — one real signal: a customer quote, a support ticket volume, a competitor's pricing page, a workaround they observed.
+
+If two of three are missing, refuse to score. Say which are missing and ask for exactly those. Scoring an idea with no user and no evidence produces a confident number built on nothing, which is worse than no analysis.
+
+## Step 1 — Understand the idea
+
 Ask:
-1. What's the idea in one sentence?
-2. Who specifically has this problem? (Job title, company size, situation)
+1. What is the idea in one sentence?
+2. Who specifically has this problem? Job title, company size, situation.
 3. How are they solving it today?
-4. Why are you the right person/team to build this?
+4. Why are you the right person or team to build this?
 
-If the user gives a vague answer to #2 (e.g., "everyone" or "businesses"), push back. Every viable idea has a specific first customer.
+If the answer to #2 is vague, push back before proceeding. Every viable idea has a specific first customer.
 
-### Step 2: Run the Validation Framework
+## Step 2 — Competitive scan
 
-Score the idea across 5 dimensions. Rate each **Strong** / **Moderate** / **Weak** with 3-5 sentences of reasoning. Cite comparables, reference market data, and name assumptions explicitly.
+Run this before scoring Market Evidence. It grounds the rating in reality.
 
-**1. Problem Severity**
-- Is this a hair-on-fire problem or a nice-to-have?
-- How often do users encounter it? (Daily = strong, yearly = weak)
-- What's the cost of the status quo? (Time, money, frustration, risk)
-- Would they pay to solve this TODAY, or is it a "someday" problem?
+- **Direct competitors** — name 2–3 with pricing, estimated size, and years in market.
+- **Adjacent solutions** — what are people cobbling together today? Spreadsheets + Slack + manual process is a strong signal.
+- **Platform risk** — which incumbent could ship this as a feature in one sprint?
+- **Graveyard** — has this been tried and failed? A failed predecessor is not disqualifying, but the user must explain what changed.
 
-Scoring guide:
-- **Strong**: Users encounter this daily/weekly AND it costs them real time or money. They've tried workarounds.
-- **Moderate**: Real problem but low frequency, or high frequency but low pain. Users cope with the status quo.
-- **Weak**: Nice-to-have. Users don't actively seek solutions. No evidence of workarounds.
-
-**2. Market Evidence**
-- Are people already paying for alternatives? What are they paying?
-- What search volume, forum posts, Reddit threads, or support tickets exist?
-- Is the market growing or shrinking? What's the tailwind?
-- Are there adjacent markets that validate demand?
-
-Scoring guide:
-- **Strong**: Multiple competitors with revenue. Growing market. Clear willingness to pay.
-- **Moderate**: Some competitors or adjacent products. Market exists but unclear size.
-- **Weak**: No competitors (this is usually bad, not good). No evidence of demand.
-
-**3. Solution Differentiation**
-- Why would someone switch from their current solution to yours?
-- What's the unique angle? (Faster, cheaper, simpler, better for a specific segment?)
-- Is the differentiation defensible? (Network effects, data moat, expertise, integrations?)
-- Can you explain the difference in one sentence?
-
-Scoring guide:
-- **Strong**: Clear, defensible wedge. Can articulate in one sentence why this wins for a specific segment.
-- **Moderate**: Differentiation exists but may not be durable. "Better UX" alone is moderate.
-- **Weak**: Me-too product. Differentiation requires explaining. "We're like X but better."
-
-**4. Feasibility**
-- Can a small team build an MVP in 4-6 weeks?
-- What are the biggest technical risks?
-- Does it require data you don't have? Partnerships you don't have? Regulatory approval?
-- What's the simplest version that delivers value?
-
-Scoring guide:
-- **Strong**: MVP buildable in weeks with existing tools/APIs. No special data or partnerships needed.
-- **Moderate**: Buildable but requires one hard thing (a key integration, a dataset, a specific hire).
-- **Weak**: Requires multiple breakthroughs, regulatory approval, or years of data collection.
-
-**5. Business Viability**
-- How does this make money? What's the monetization model?
-- What's the realistic willingness to pay? (Based on alternatives, not hope)
-- What does the unit economics look like? (CAC vs. LTV rough estimate)
-- Can this reach $1M ARR? What does that require? (X customers at $Y/month)
-
-Scoring guide:
-- **Strong**: Clear monetization. Path to $1M ARR requires <1,000 customers. Healthy unit economics.
-- **Moderate**: Monetization plausible but unproven. Path to $1M ARR requires >5,000 customers or unclear pricing.
-- **Weak**: Monetization is "figure it out later" or requires massive scale to work.
-
-### Step 2b: Quick Competitive Scan
-
-Before scoring Market Evidence, run a rapid competitive scan. This grounds ratings in reality, not intuition.
-
-**Direct competitors** (same problem, same customer):
-- Name 2-3 if they exist. Note their pricing, estimated size, and how long they've been around.
-- If you can't find any, that's usually a red flag, not an opportunity. Say so.
-
-**Adjacent solutions** (different product, overlaps with part of the problem):
-- What are people cobbling together today? (Spreadsheets + Slack + manual process = strong signal)
-- Which big platforms might add this as a feature? (If Salesforce could build it in a sprint, flag that risk)
-
-**Graveyard check**:
-- Have similar products been tried and failed? If so, why? (Timing, execution, market?)
-- A failed predecessor is not disqualifying, but the user must explain what has changed.
-
-Present this as a compact table:
+Output as a table:
 
 ```
 | Competitor/Alternative | Type | Pricing | Est. Size | Key Weakness |
-|------------------------|------|---------|-----------|-------------|
+|------------------------|------|---------|-----------|--------------|
 | [Name] | Direct | $X/mo | [size] | [gap] |
 | [Name] | Adjacent | Free | [size] | [limitation] |
 | DIY (spreadsheet) | Workaround | Free | Common | [pain point] |
 ```
 
-If you genuinely lack data for this scan, say "[NEED: competitive research on X]" and score Market Evidence as **Moderate** at best.
+If you lack real data here, write `[NEED: competitive research on X]` and cap Market Evidence at **Moderate**.
 
-### Step 3: Verdict
+## Step 3 — Score the five dimensions
 
-Present a summary scorecard:
+Rate each **Strong** / **Moderate** / **Weak**. The full bar for each rating is in `references/scoring-rubric.md` — read it, do not score from intuition.
 
-```
-| Dimension              | Rating   |
-|------------------------|----------|
-| Problem Severity       | [rating] |
-| Market Evidence        | [rating] |
-| Solution Differentiation | [rating] |
-| Feasibility            | [rating] |
-| Business Viability     | [rating] |
-```
+1. **Problem Severity** — frequency, cost of status quo, evidence of workarounds
+2. **Market Evidence** — who is already paying, what, and is the market growing
+3. **Solution Differentiation** — the wedge, and whether it is defensible
+4. **Feasibility** — MVP in 4–6 weeks with a small team, and what the hard thing is
+5. **Business Viability** — monetization, willingness to pay, path to $1M ARR
 
-Then deliver the overall assessment:
+## Output template
 
-**Verdict: [GO / ITERATE / STOP]**
-- **GO**: Strong across 4+ dimensions. Worth building an MVP now.
-- **ITERATE**: Promising but 1-2 dimensions need work. Suggest specific pivots.
-- **STOP**: Fundamental issues that pivoting won't fix. Explain why directly.
-
-### Step 4: Killer Questions
-Ask 3 questions the founder must answer before building. Target the weakest dimensions.
-
-### Step 5: Next Steps
-If GO or ITERATE, suggest 3 specific experiments to de-risk the idea. Prioritize by speed and cost.
-
-Format each as:
-- **Experiment**: [What to do]
-- **Cost**: [Time and money required]
-- **Signal**: [What result would increase/decrease your confidence]
-
----
-
-## Good vs. Bad Validation Examples
-
-### Good Validation (Idea: AI meeting note-taker for sales teams)
+Exact fields, exact order.
 
 ```
-1. Problem Severity: STRONG
-Sales reps spend 30-45 minutes after every call writing notes in the CRM.
-With 5-8 calls per day, that's 3+ hours of admin work. Reps universally
-hate it — it's the #1 complaint in every sales team survey I've seen.
-Current workaround: reps either skip notes entirely (bad for the team)
-or write minimal notes (bad for deal context). This is a daily, high-cost,
-high-frustration problem.
+## Verdict: [GO / ITERATE / STOP]
 
-2. Market Evidence: STRONG
-Gong ($7B+ valuation), Chorus (acquired by ZoomInfo for $575M), and
-Fireflies.ai all prove willingness to pay. "Sales call recording" has
-strong and growing search volume. The shift to remote selling accelerated
-demand. Market is large and growing.
+[Two sentences. The decision and the single reason for it.]
+
+## Scorecard
+
+| Dimension                | Rating   | One-line reason |
+|--------------------------|----------|-----------------|
+| Problem Severity         | [rating] | [reason]        |
+| Market Evidence          | [rating] | [reason]        |
+| Solution Differentiation | [rating] | [reason]        |
+| Feasibility              | [rating] | [reason]        |
+| Business Viability       | [rating] | [reason]        |
+
+## Competitive landscape
+[table from Step 2]
+
+## Reasoning
+[3-5 sentences per dimension. Comparables, numbers, named assumptions.]
+
+## Killer questions
+[3 questions the founder must answer before building. Target the weakest dimensions.]
+
+## Next 3 experiments
+- **Experiment:** [what to do]
+  **Cost:** [time and money]
+  **Signal:** [what result raises or lowers confidence]
+[x3, ordered by speed and cost]
+
+## Assumptions and gaps
+[Every ASSUMPTION: and [NEED: X] from above, listed together.]
 ```
 
-### Bad Validation (same idea, done poorly)
+Verdict thresholds: **GO** = strong across 4+ dimensions. **ITERATE** = promising, 1–2 dimensions need work, name the specific pivot. **STOP** = fundamental issues pivoting will not fix.
 
-```
-1. Problem Severity: STRONG
-Taking meeting notes is annoying and people don't like doing it.
-This would save time.
+## Example
 
-2. Market Evidence: STRONG
-There are some competitors in this space which validates the idea.
-```
+**Idea:** AI meeting note-taker for sales teams.
 
-The bad version gives ratings without evidence. No specifics, no data, no reasoning. Worthless.
+**Problem Severity: STRONG**
+> Sales reps spend 30–45 minutes after every call writing CRM notes. At 5–8 calls per day that is 3+ hours of admin. Reps universally hate it — it is the #1 complaint in every sales team survey I have seen. The current workaround is telling: reps either skip notes entirely, which hurts the team, or write minimal notes, which loses deal context. Daily frequency, high cost, active workarounds.
 
-### Good STOP Verdict
+**Market Evidence: STRONG**
+> Gong ($7B+ valuation), Chorus (acquired by ZoomInfo for $575M), and Fireflies.ai all prove willingness to pay at multiple price points. "Sales call recording" has strong and growing search volume. The shift to remote selling accelerated demand structurally, not cyclically.
 
-```
-Verdict: STOP
+Contrast — the same two ratings, done badly:
 
-This is a social network for dog owners. Here's the core issue:
+> **Problem Severity: STRONG** — Taking meeting notes is annoying and people don't like doing it. This would save time.
+> **Market Evidence: STRONG** — There are some competitors in this space which validates the idea.
 
-Problem Severity is Moderate (dog owners do want to connect) but
-Market Evidence is Weak and Business Viability is Weak.
+The bad version gives ratings without evidence. No specifics, no data, no reasoning. It is worse than useless because it looks like analysis.
 
-Every social network for a niche audience in the last 10 years has
-failed unless it had a transactional core (buying/selling, booking,
-matching). Nextdoor, the closest comparable, took $1B+ in funding and
-still struggles with engagement.
+A full worked STOP verdict is in `references/scoring-rubric.md`.
 
-Your differentiation — "better UI than Facebook Groups" — isn't
-defensible. Facebook can copy any feature in a sprint.
+## Shortcuts Claude takes
 
-The honest path to $1M ARR requires 100K+ active users at roughly
-$10/year (premium features). Customer acquisition for social networks
-averages $5-15/user, meaning $500K-$1.5M in CAC before revenue.
+| What Claude might think | Why it's wrong |
+|-------------------------|----------------|
+| "The user is clearly excited, I'll soften the STOP" | A softened STOP costs them six months. The verdict is the product. |
+| "No competitors — that's white space" | No competitors almost always means no market. Rate Market Evidence Weak and say why. |
+| "I don't have market data, I'll estimate" | An estimated TAM reads as real to the user. Write `[NEED:]` instead. |
+| "Four Strongs and one Weak — round up to GO" | The one Weak is usually the thing that kills it. Weak Business Viability alone is an ITERATE at best. |
+| "Next step: build a prototype" | The first step after validation is almost never building. Propose a demand test. |
+| "The scorecard covers it, I'll skip the killer questions" | The questions are where the founder finds the gap. Never drop the section. |
 
-This isn't a bad idea for a fun project. It's a bad idea for a business.
+## Exit checklist
 
-If you want to serve dog owners, consider a transactional model:
-vet booking, dog walker marketplace, or pet supply subscription.
-```
+Not complete until every box is checked. Any `[NEED: X]` or `[rating]` placeholder left in the output is an automatic unchecked box — either fill it or state it explicitly in the Assumptions and gaps section.
 
-### Bad STOP Verdict
+- [ ] Existence check passed, or the analysis was refused with reasons named
+- [ ] All 5 dimensions rated with 3–5 sentences of specific reasoning each
+- [ ] Every STRONG cites a named comparable, number, or observed behavior
+- [ ] Competitive table filled, or `[NEED:]` flagged and Market Evidence capped at Moderate
+- [ ] Verdict is one of GO / ITERATE / STOP, stated in the first line
+- [ ] If STOP, the reasoning explains why a pivot will not fix it
+- [ ] If ITERATE, the specific pivot is named
+- [ ] 3 killer questions target the weakest dimensions
+- [ ] 3 experiments listed with cost and signal
+- [ ] Every assumption is labeled `ASSUMPTION:` and collected at the end
+- [ ] No template placeholders remain
 
-```
-Verdict: STOP
-This idea already has competitors so it might be hard to differentiate.
-```
+## Next
 
-The bad version doesn't explain WHY it's a stop. It mistakes having competitors for a weakness (it's usually a strength — it proves demand).
-
----
-
-## Anti-Patterns
-- Never give STRONG ratings without evidence. Every rating requires specific reasoning.
-- Never default to GO because the user is excited. Your job is honesty, not encouragement.
-- Never confuse "no competitors" with opportunity. It usually means no market.
-- Never say "this could be big" without showing the math.
-- Never suggest building before validating. The first next step is almost never "build the MVP."
-- Never be vague about risks. "This could be hard" is empty. Name exactly what is hard and why.
-
-## Rules
-- Be honest. A polite "this idea is great!" helps no one. Users want truth, not comfort.
-- Use real comparables. "This is like X but for Y" grounds the analysis.
-- Flag every assumption explicitly. If you're guessing about market size, say "ASSUMPTION:" and explain what data would confirm or deny it.
-- If the user is emotionally attached, acknowledge it — then give the honest analysis anyway.
-- Never give all STRONGs unless it's genuinely exceptional. Most ideas are a mix.
-- The best validation includes specific numbers: market size, comparable pricing, conversion rates, customer counts.
+- If the verdict is GO or ITERATE → recommend `/prd-writer` to spec the first experiment, not the full product.
+- If Solution Differentiation was the weak dimension → recommend `/competitive-analysis` before any build work.
+- If the user wants to pitch this idea publicly → recommend `/linkedin-post-writer`, but only after the evidence exists.

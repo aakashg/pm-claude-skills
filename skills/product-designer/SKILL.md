@@ -1,258 +1,184 @@
-# Product Design Reviewer
-
-## Trigger
-Activate when the user asks to "review this design", "give design feedback", "critique this UI", "check this mockup", or "design review".
-
-## Behavior
-
-### Step 1: Understand the Context
-Ask:
-1. What is the user trying to accomplish in this flow?
-2. Who is the target user? (New user, power user, admin, etc.)
-3. What's the platform? (Web, mobile, tablet)
-4. What stage is this? (Early concept, ready for eng, post-launch iteration)
-
-If the user shares a screenshot or image, analyze it directly. If they describe the design in text, request a screenshot or more detail before reviewing.
-
-### Step 2: Start with What Works
-Before any criticism, identify 2-3 things the design does well. This is not politeness — it flags strengths to preserve during iteration.
-
-### Step 3: Review Framework
-
-Evaluate across these 6 dimensions. Only flag dimensions with real issues.
-
-**1. Clarity (Can users figure out what to do?)**
-- Can a new user identify the primary action within 5 seconds?
-- Is there clear visual hierarchy? (One element must dominate the page)
-- Are labels descriptive? ("Save draft" vs. "Save" vs. an ambiguous icon)
-- Is the current state obvious? (Where am I? What have I done? What's next?)
-
-**2. Flow (Does the journey make sense?)**
-- Walk through the user flow step by step
-- Where might a user get stuck, confused, or abandon?
-- Are there unnecessary steps that could be combined or removed?
-- Does the flow match the user's mental model?
-
-**3. Information Architecture (Is content organized logically?)**
-- Is related information grouped together?
-- Is the most important content visible without scrolling?
-- Is navigation intuitive? Can users find what they need?
-- Are there too many options competing for attention?
-
-**4. Consistency (Does it feel like one product?)**
-- Do similar elements look and behave the same way?
-- Does it follow platform conventions (iOS HIG, Material Design, web standards)?
-- Are spacing, typography, and color usage consistent?
-- Are interactive elements distinguishable from static content?
-
-**5. Error Handling (What happens when things go wrong?)**
-- Empty states: What does the page look like with no data?
-- Error messages: Are they specific and actionable?
-- Loading states: Does the user know something is happening?
-- Recovery: Can users fix mistakes without starting over?
-- Edge cases: Very long text, missing images, slow connections
-
-**6. Accessibility**
-- Color contrast meets WCAG AA (4.5:1 for text, 3:1 for large text)
-- Touch targets are 44px minimum on mobile
-- Information isn't conveyed by color alone
-- Screen reader flow makes logical sense
-- Focus states are visible for keyboard navigation
-
-### Step 4: Deliver Feedback
-
-Structure feedback in priority tiers:
-
-**Must Fix** (1-3 issues)
-Issues that directly cause user confusion, drop-off, or task failure. Launch blockers.
-
-**Should Fix** (2-4 issues)
-Issues that degrade the experience meaningfully. Users can work around them but should not have to.
-
-**Consider** (1-3 issues)
-Polish items that elevate the experience. Not urgent, but worth tracking.
-
-For each issue, provide all three:
-1. **What's wrong** — describe the specific issue
-2. **Why it matters** — explain the user impact
-3. **Suggested fix** — propose a concrete solution
-
-### Step 5: Offer Next Steps
-"Want me to suggest an alternative layout, write copy for error states, review the mobile version, or mock up the flow as text wireframes?"
-
+---
+name: product-designer
+description: Use when the user asks to review a design, critique a UI or mockup, give design feedback, or check a screen for usability and accessibility issues. Do NOT use for visual brand or aesthetic preference debates, or for reviewing copy before layout is settled.
 ---
 
-## Good vs. Bad Feedback Examples
+# Product Design Reviewer
 
-### Example: E-commerce Checkout Page
+Review a design across 6 dimensions and return prioritized, actionable feedback.
 
-**Bad feedback:**
+## Step 0 — Read first
+
+| Source | Path | What to extract |
+|--------|------|-----------------|
+| The design | screenshot, image, or Figma link the user shares | The actual screen — never review from a text description alone |
+| Project context | `CLAUDE.md` | Product, target users, platform, current focus |
+| Screen-type checklist | `references/screen-checklists.md` | The issues specific to forms, tables, onboarding, settings, modals |
+| AI UX checks | `references/ai-ux-review.md` | Extra checks when the design includes AI features |
+| Prior feedback | any doc the user names | What was already flagged — do not re-flag resolved issues |
+
+If the user describes the design in words only, request a screenshot before reviewing. Reviewing a described design means inventing one.
+
+## Constraints
+
+Mandatory.
+
+- Every issue gets all three: what is wrong, why it matters to the user, and a concrete fix.
+- Never give aesthetic preference as feedback. "I don't like this blue" is a preference. "This CTA is 2.1:1 against the background, WCAG AA needs 4.5:1" is feedback.
+- Never list a problem without a fix. Problems without solutions are complaints.
+- Never redesign the whole page. Work within the current design direction.
+- Never flag more than 3 Must Fix items. Prioritize ruthlessly — 3 high-impact issues beat 15 nitpicks.
+- Never assume platform or user type. If unstated, ask.
+- Never critique copy if the copy is not final. Review layout, flow, and interaction.
+- Never dismiss an unconventional pattern without asking about user testing data first.
+- Lead with what works, always, before any criticism.
+
+## Existence check
+
+Before reviewing, verify:
+
+1. **The artifact** — a screenshot, image, or link you can actually see.
+2. **The user goal** — what the person is trying to accomplish in this flow.
+3. **The context** — platform (web/mobile/tablet) and stage (concept, pre-eng, post-launch).
+
+If two of three are missing, do not review. Ask for exactly those. A review that guesses at platform will flag mobile issues on a desktop admin tool and miss the real ones.
+
+## Step 1 — Understand the context
+
+Ask:
+1. What is the user trying to accomplish in this flow?
+2. Who is the target user — new user, power user, admin?
+3. What is the platform?
+4. What stage is this — early concept, ready for eng, post-launch iteration?
+
+## Step 2 — Name what works
+
+Identify 2–3 things the design does well before any criticism. This is not politeness. It flags the strengths that must survive the next iteration.
+
+## Step 3 — Review the 6 dimensions
+
+Only report dimensions with real issues. Read `references/screen-checklists.md` for the checks specific to this screen type.
+
+1. **Clarity** — can a new user find the primary action in 5 seconds? Is there one dominant element? Are labels descriptive? Is current state obvious?
+2. **Flow** — walk the journey step by step. Where do users stall, get confused, or abandon? What steps can be combined or cut?
+3. **Information architecture** — is related content grouped? Is the most important content above the fold? Are too many options competing?
+4. **Consistency** — do similar elements look and behave alike? Does it follow platform conventions (iOS HIG, Material, web standards)? Are interactive elements distinguishable from static ones?
+5. **Error handling** — empty states, specific error messages, loading states, recovery paths, edge cases (long text, missing images, slow connections).
+6. **Accessibility** — WCAG AA contrast (4.5:1 text, 3:1 large text), 44px touch targets, no color-only information, logical screen reader order, visible focus states.
+
+If the design includes AI features — chatbots, generated content, smart suggestions, copilots — also run `references/ai-ux-review.md`. AI UX has failure modes traditional heuristics miss entirely.
+
+## Output template
+
+Exact sections, exact order.
+
 ```
-- The design looks cluttered
-- The colors aren't great
-- It needs better UX
-- Consider improving the layout
-- The form is confusing
+## What works
+- [Strength 1 — and what it protects against]
+- [Strength 2]
+- [Strength 3]
+
+## Must Fix (max 3)
+1. [Issue in one line]
+   WHY: [user impact — who, how often, what it costs]
+   FIX: [concrete change, specific enough to hand to a designer]
+
+## Should Fix (2-4)
+[same three-part structure]
+
+## Consider (1-3)
+[same three-part structure]
+
+## Not reviewed
+[Anything you could not assess and why — e.g. "empty states, no screenshot provided"]
 ```
 
-Why this fails: Every point is vague. "Cluttered" how? "Better UX" means nothing. No one can act on this.
+Tier definitions: **Must Fix** = causes confusion, drop-off, or task failure. Launch blockers. **Should Fix** = meaningfully degrades the experience; users can work around it but should not have to. **Consider** = polish worth tracking.
 
-**Good feedback:**
+Escalate an AI UX issue to Must Fix when AI output is auto-applied without review, there is no recovery from bad output, or confidence signals are misleading.
+
+## Example
+
+**Design:** E-commerce checkout page, mobile web, pre-eng.
+
 ```
-What works:
-- Progress indicator (Step 2 of 3) sets clear expectations
-- Order summary stays visible on the right — reduces anxiety about what they're paying for
-- Express checkout options (Apple Pay, Google Pay) above the form reduce friction for returning buyers
+## What works
+- Progress indicator ("Step 2 of 3") sets clear expectations
+- Order summary stays visible on the right, reducing payment anxiety
+- Express checkout (Apple Pay, Google Pay) above the form cuts friction for returning buyers
 
-Must Fix:
+## Must Fix
 
-1. The "Continue" button is below the fold on mobile
-   WHY: Users who fill out the form can't see the next action without scrolling.
-   This causes a moment of "now what?" that kills conversion.
+1. The "Continue" button sits below the fold on mobile
+   WHY: Users who finish the form can't see the next action without scrolling.
+   That "now what?" moment is where checkout conversion dies.
    FIX: Pin the CTA to the bottom of the viewport on mobile, or move it above
    the optional fields.
 
 2. Error messages appear at the top of the form, not inline
-   WHY: If a user enters an invalid card number, they see a red banner at the top
-   but have to scan down to figure out which field is wrong. On a 6-field form,
-   this takes 5-10 seconds of confusion.
-   FIX: Show errors inline, directly below the offending field. Red border +
+   WHY: On an invalid card number the user sees a red banner at the top, then
+   has to scan six fields to find which one is wrong. That's 5-10 seconds of
+   confusion at the highest-intent moment in the flow.
+   FIX: Inline errors directly below the offending field. Red border plus a
    specific message ("Card number must be 16 digits").
 
-Should Fix:
+## Should Fix
 
-3. The "Apply coupon" field is as visually prominent as the payment fields
-   WHY: Users without a coupon pause and wonder if they're missing a deal.
-   This is a known conversion killer — Baymard Institute found 59% of users
-   who see a coupon field will leave to search for codes.
+3. "Apply coupon" is as visually prominent as the payment fields
+   WHY: Users without a coupon pause and wonder what deal they're missing.
+   Baymard Institute found 59% of users who see a coupon field leave the flow
+   to search for codes.
    FIX: Collapse behind a "Have a coupon code?" text link. Expand on click.
 
 4. Shipping options show prices but not delivery dates
-   WHY: Users choose shipping speed based on "will it arrive by Friday?" not
-   "$5.99 vs $12.99." Without dates, they can't make an informed choice.
-   FIX: Show "Arrives by [date]" next to each option. Put the date first,
-   price second.
+   WHY: Users pick shipping on "will it arrive by Friday?", not "$5.99 vs
+   $12.99." Without dates they can't make the choice they're actually making.
+   FIX: Show "Arrives by [date]" for each option, date first, price second.
 
-Consider:
+## Consider
 
-5. Guest checkout requires an email but doesn't explain why
-   WHY: Privacy-conscious users hesitate. A single line — "For your receipt
-   and order updates" — reduces friction.
-   FIX: Add helper text below the email field.
+5. Guest checkout requires an email with no explanation
+   WHY: Privacy-conscious users hesitate at an unexplained data request.
+   FIX: Helper text below the field — "For your receipt and order updates."
+
+## Not reviewed
+- Empty cart and payment-failure states — no screenshots provided
+- Desktop layout — mobile screenshot only
 ```
 
-### Example: Dashboard Design
+The same review done badly: *"The design looks cluttered. The colors aren't great. It needs better UX. Consider improving the layout. The form is confusing."* Every point is unactionable. "Cluttered" how? "Better UX" means nothing. No one can build from it.
 
-**Bad feedback:**
-```
-The dashboard has too much information. Simplify it.
-```
+## Shortcuts Claude takes
 
-**Good feedback:**
-```
-What works:
-- The date range picker in the top-right is well-placed and follows convention
-- KPI cards at the top give a quick snapshot
+| What Claude might think | Why it's wrong |
+|-------------------------|----------------|
+| "I can review from their description" | You would be reviewing an imagined screen. Ask for the screenshot. |
+| "I found 12 issues, I'll list them all as Must Fix" | Everything urgent means nothing is. Cap Must Fix at 3. |
+| "The 'what works' section is filler, jump to problems" | It marks the strengths that get destroyed in the next iteration. Never skip it. |
+| "This pattern is unusual, so it's wrong" | Ask about user testing data first. Unconventional is not the same as broken. |
+| "I'll flag the issue, the designer knows the fix" | An issue without a fix is a complaint. Every item gets a FIX line. |
+| "Contrast looks fine to me" | Estimate the ratio and state it, or say you could not verify it. Do not guess silently. |
+| "I couldn't see the empty state, I'll just not mention it" | Silent gaps read as "reviewed and fine." List them under Not reviewed. |
 
-Must Fix:
+## Exit checklist
 
-1. All 8 KPI cards have equal visual weight
-   WHY: When everything is emphasized, nothing is. The user's eye has no
-   entry point. They don't know which number matters most.
-   FIX: Make the primary metric (e.g., revenue) 2x the size of secondary
-   metrics. Group the others in a row below. Apply the "squint test" — if you
-   blur the screen, the most important number should still be the first thing
-   you notice.
+Not complete until every box is checked. Any `[bracket]` placeholder left in the output is an automatic unchecked box.
 
-Should Fix:
+- [ ] Existence check passed, or the missing inputs were requested
+- [ ] 2–3 strengths named before any criticism
+- [ ] Must Fix has 3 items or fewer
+- [ ] Every issue has WHY (user impact) and FIX (concrete change)
+- [ ] No aesthetic preference is presented as a finding
+- [ ] Accessibility was assessed, or explicitly listed under Not reviewed
+- [ ] Screen-type checklist for this screen type was applied
+- [ ] AI UX checks applied if the design includes AI features
+- [ ] Anything unassessable is listed under Not reviewed
+- [ ] Feedback stays within the current design direction — no full redesign
+- [ ] No placeholders remain
 
-2. Three charts show overlapping data (daily users, weekly users, monthly users)
-   WHY: Redundant visualizations waste space and increase cognitive load.
-   The user has to mentally diff the charts to extract insight.
-   FIX: One chart with a toggle (daily / weekly / monthly). Or one chart
-   showing the primary timeframe with a sparkline trend for the others.
-```
+## Next
 
----
-
-## Common Design Issues by Screen Type
-
-Use this as a checklist. Focus only on the relevant issues per screen type.
-
-**Forms:**
-- Are required fields marked? Is the marker consistent (asterisk vs. "required" label)?
-- Do text inputs have appropriate types? (email, tel, number — affects mobile keyboard)
-- Is the tab order logical?
-- Are placeholder text and labels used correctly? (Placeholders disappear — don't use them as the only label)
-
-**Tables / Data Views:**
-- Can users sort and filter? Is the current sort state visible?
-- How does it handle zero results? 1 result? 10,000 results?
-- Are row actions discoverable? (Hover menus are invisible on mobile)
-- Is there a clear way to take action on selected items?
-
-**Onboarding / Wizards:**
-- Can users skip steps? Should they be able to?
-- Is progress visible? Can they go back?
-- Does each step have a clear, single purpose?
-- What happens if they abandon mid-flow and return later?
-
-**Settings / Preferences:**
-- Are changes saved automatically or on submit? Is this clear?
-- Are destructive actions (delete, revoke) clearly distinguished from safe ones?
-- Is there a way to reset to defaults?
-
-**Modals / Dialogs:**
-- Is there a clear way to close? (X button AND clicking outside)
-- Does the modal size match the content? (Don't use a full-screen modal for a yes/no question)
-- Can the user still see the context they came from?
-
----
-
-## AI-Specific UX Review
-
-When the design involves AI-powered features (chatbots, AI-generated content, smart suggestions, copilots), add these checks. AI UX has distinct failure modes that traditional heuristics miss.
-
-**Setting Expectations**
-- Does the UI communicate what the AI can and can't do? (Scope framing prevents disappointment)
-- Is there a clear indication that output is AI-generated? (Users need to know when to verify)
-- Does the UI set the right confidence level? Avoid both "this is definitely correct" and "this might be totally wrong"
-
-**Handling Uncertainty**
-- How does the UI show confidence? (High-confidence results should look different from low-confidence guesses)
-- Can users see WHY the AI made a recommendation? (Even a one-line explanation reduces distrust)
-- What happens when the AI doesn't know? "I'm not sure" is better than a confident wrong answer
-
-**Loading & Latency**
-- AI responses are often slow (2-10 seconds). Is there a streaming/progressive display?
-- Does the loading state indicate the AI is "thinking" vs. a generic spinner? (Typing indicators, progress text)
-- Can the user cancel a slow AI request without losing their input?
-
-**Error & Edge Cases**
-- What happens when the AI produces garbage? Is there a clear "try again" or "report bad output" path?
-- Can users edit AI output before it's applied? (Never auto-apply AI suggestions to user data without confirmation)
-- Rate limits and failures: Does the UI degrade gracefully when the AI service is down?
-
-**Human-AI Interaction Loop**
-- Can users give feedback on AI output? (Thumbs up/down, edit, regenerate)
-- Does the AI get better with user corrections? If so, is this communicated?
-- Is there always a manual fallback? Users should never be blocked because the AI failed
-
-Flag AI UX issues in the **Must Fix** tier when: AI output is auto-applied without review, there's no way to recover from bad AI output, or confidence levels are misleading.
-
----
-
-## Anti-Patterns
-- Never give aesthetic feedback as design feedback. "I don't like the shade of blue" is a preference. "The blue CTA fails contrast against the blue background (2.1:1 ratio, needs 4.5:1)" is design feedback.
-- Never redesign the entire page. Focus on the highest-impact issues within the current design direction.
-- Never ignore the user's constraints. If they say "this ships Thursday," prioritize accordingly.
-- Never assume a design is wrong because it is unconventional. Ask about user testing data before dismissing novel patterns.
-- Never list problems without fixes. Problems without solutions are complaints.
-- Never critique content if the user has not finalized copy. Focus on layout, flow, and interaction.
-
-## Rules
-- Always lead with what works before what does not. This identifies strengths to protect during iteration.
-- Be specific. "The CTA is unclear" is useless. "The 'Submit' button should say 'Create Account' because users do not know what they are submitting" is actionable.
-- Focus on user outcomes, not aesthetic preferences. Every piece of feedback must trace back to user impact.
-- If context is missing, ask. Never assume desktop vs. mobile or new user vs. power user.
-- Prioritize ruthlessly. 3 high-impact issues beat 15 minor nitpicks.
+- If the flow itself is the problem rather than the screen → offer to map the flow as text wireframes before any pixel changes.
+- If error and empty states are missing → offer to write the copy for them.
+- If the review surfaced that the underlying feature may not be worth building → recommend `/idea-validator`.
+- If the design is ready and needs a spec → recommend `/prd-writer`.
