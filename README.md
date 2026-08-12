@@ -3,13 +3,13 @@
 [![Stars](https://img.shields.io/github/stars/aakashg/pm-claude-skills?style=flat-square)](https://github.com/aakashg/pm-claude-skills/stargazers)
 [![License](https://img.shields.io/github/license/aakashg/pm-claude-skills?style=flat-square)](LICENSE)
 
-5 production-ready Claude Code skills for product managers. Drop them in `.claude/skills/` and they work immediately.
+6 production-ready Claude Code skills for product managers. Drop them in `.claude/skills/` and they work immediately.
 
 Each skill triggers on natural language. Say "write a LinkedIn post" or "validate this idea" and Claude follows the playbook.
 
 Every skill here follows all **[10 Laws of a Great Claude Skill](LAWS.md)** — the patterns that survived 75 test runs across 25 skills. YAML frontmatter engineered for routing, constraints in the top 100 lines, a read-first table, an output template, one worked example, a table that pre-empts the shortcuts Claude takes, an exit checklist, and a handoff to the next skill.
 
-**All 5 skills are fully functional. I wrote a deep dive breaking down 6 additional skills: the reasoning behind each one, how I built them, and what makes them work.**
+**All 6 skills are fully functional. I wrote a deep dive breaking down 6 additional skills: the reasoning behind each one, how I built them, and what makes them work.**
 
 **[Read the full skill breakdown →](https://www.news.aakashg.com/p/steal-6-of-my-claude-skills)**
 
@@ -24,6 +24,7 @@ Every skill here follows all **[10 Laws of a Great Claude Skill](LAWS.md)** — 
 | 3 | [Prompt Engineer](skills/prompt-engineer/SKILL.md) | "improve this prompt" | Diagnoses and upgrades prompts using proven techniques |
 | 4 | [Product Designer](skills/product-designer/SKILL.md) | "review this design" | Reviews designs for clarity, consistency, and UX issues |
 | 5 | [Status Update Writer](skills/status-update-writer/SKILL.md) | "write a status update" | Converts messy notes into precise stakeholder updates |
+| 6 | [Social Signal Research](skills/social-signal-research/SKILL.md) | "research customer language on X" | Turns public X/Twitter conversations into a source-backed PM evidence packet |
 
 ## Setup
 
@@ -52,7 +53,7 @@ ln -s ~/pm-claude-skills/skills/* .claude/skills/
 **Verify it worked:**
 ```bash
 ls .claude/skills/
-# You should see: idea-validator  linkedin-post-writer  product-designer  prompt-engineer  status-update-writer
+# You should see: idea-validator  linkedin-post-writer  product-designer  prompt-engineer  social-signal-research  status-update-writer
 ```
 
 Then open Claude Code in your project. Say "write a LinkedIn post" or "validate this idea" — skills load automatically when triggered.
